@@ -23,6 +23,7 @@ import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
 
 public class AvatarActivity extends AppCompatActivity {
 
+    // esto es una preueba
     String avatarSeleccionado;
     ImageView imgAvatarS;
     SharedPreferences preferences;
