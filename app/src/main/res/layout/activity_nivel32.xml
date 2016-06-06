@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/escenario_tresd"
+    android:layout_height="match_parent"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.activities.NivelesActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/h_linear"
+        android:layout_marginLeft="@dimen/l_linear"
+        android:layout_marginRight="@dimen/r_linear"
+        android:layout_marginTop="@dimen/top_linear"
+        android:background="@drawable/cinta_niveles"
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout2">
+
+
+        <ImageView
+            android:layout_width="@dimen/w_oro"
+            android:layout_height="@dimen/h_oro"
+            android:src="@drawable/ic_oros"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/l_oro"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/txt_oros"
+            android:text="x 0"
+            android:id="@+id/tv_puntos"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/cardview_dark_background"/>
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/w_perfil"
+        android:layout_height="@dimen/h_perfil"
+        android:layout_marginRight="@dimen/r_perfil"
+        android:layout_alignParentTop="true"
+        android:id="@+id/ic_avatarNiveles"
+        android:layout_alignRight="@+id/linearLayout2"
+        android:layout_alignEnd="@+id/linearLayout2" />
+
+    <ImageView
+        android:layout_width="@dimen/w_avatar"
+        android:layout_height="@dimen/h_avatar"
+        android:id="@+id/correAvatar"
+        android:layout_marginBottom="94dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/ic_avatarNiveles"
+        android:layout_toStartOf="@+id/ic_avatarNiveles" />
+
+</RelativeLayout>

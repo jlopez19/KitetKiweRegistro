@@ -1,0 +1,113 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/fondo"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.activities.RegistrarseActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.5">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"/>
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.5">
+    <TextView
+        android:id="@+id/tvNombreR"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.07"
+        android:textSize="24sp"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="NOMBRE"/>
+    <EditText
+        android:id="@+id/edt_usuario_registro"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.1"
+        android:inputType="text"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/cajas_txt"/>
+    <TextView
+        android:id="@+id/tv_contraR"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.07"
+        android:textSize="24sp"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/cardview_dark_background"
+        android:layout_marginRight="40dp"
+        android:text="CONTRASEÑA"/>
+    <EditText
+        android:id="@+id/edt_contraseña_registro"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.07"
+        android:inputType="textPassword"
+        android:layout_marginLeft="40dp"
+        android:paddingLeft="10dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/cajas_txt"
+        />
+
+
+    <LinearLayout
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight="0.16"
+        android:padding="40dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_registrar"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/btn_uno"
+            android:onClick="registrar"
+            android:textSize="18sp"
+            android:text="~REGISTRAR~"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:id="@+id/btn_cancelar"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_dos"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"
+            android:onClick="cancelar"
+            android:text="~CANCELAR~"/>
+
+</LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

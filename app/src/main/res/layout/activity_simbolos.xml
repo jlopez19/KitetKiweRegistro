@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.activities.SimbolosActivity"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/barra_simbolos"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_weight="0.77">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="421dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_bandera"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~Bandera~"
+                    android:id="@+id/tv_bandera"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_baston"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~Baston~"
+                    android:id="@+id/tv_baston"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_chumbe"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~CHUMBE~"
+                    android:id="@+id/tv_chumbe"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="340dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_escudo"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~ESCUDO~"
+                    android:id="@+id/tv_escudo"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:padding="20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_casa"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~Casa grande~"
+                    android:id="@+id/tv_casa"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_jigra"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~JIGRA~"
+                    android:id="@+id/tv_jigra"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_colibri"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~COLIBRI~"
+                    android:id="@+id/tv_colibri"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="270dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginRight="@dimen/margin"
+                    android:background="@drawable/ic_marco"
+                    android:src="@drawable/img_espiral"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="NASA YUWE \n~Espiral~"
+                    android:id="@+id/tv_espiral"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="22sp"
+                    android:gravity="center_horizontal"/>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.08"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/img_cinta_dos"/>
+</LinearLayout>

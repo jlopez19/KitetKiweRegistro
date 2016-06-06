@@ -1,0 +1,213 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.VocalesUnoFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_title"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="NIVEL 1"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="34sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cinta_niveles"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout2">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_oros"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="35dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="25sp"
+                    android:text="x 0"
+                    android:id="@+id/tv_puntos"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/cardview_dark_background"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/ic_avatarNiveles"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/linearLayout2"
+                android:layout_alignEnd="@+id/linearLayout2" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.32"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.15"
+                android:src="@drawable/voc_aspiradas"
+                android:gravity="center_horizontal"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:background="@drawable/v_aspiradas_a"
+                    android:id="@+id/v_asp_ah"
+                    android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_asp_ih"
+                    android:background="@drawable/v_aspiradas_i"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/v_asp_eh"
+                    android:layout_toEndOf="@+id/v_asp_eh" />
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:background="@drawable/v_aspiradas_e"
+                    android:id="@+id/v_asp_eh"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/v_asp_ah"
+                    android:layout_toEndOf="@+id/v_asp_ah" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_asp_uh"
+                    android:background="@drawable/v_aspiradas_u"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/v_asp_ih"
+                    android:layout_toEndOf="@+id/v_asp_ih" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0.35"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.14"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/flecha"
+                    android:src="@drawable/img_left"
+                    android:layout_marginLeft="18dp"
+                    android:gravity="center_horizontal"/>
+                <ImageView
+                    android:layout_width="245dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/voc_nasales_asp"
+                    android:gravity="center_horizontal"/>
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3">
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_aspnasa_ah"
+                    android:background="@drawable/v_aspinasa_a"
+                    android:layout_marginLeft="20dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_aspnasa_ih"
+                    android:background="@drawable/v_aspinasa_i"
+                    android:layout_marginBottom="10dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/v_aspnasa_eh"
+                    android:layout_toEndOf="@+id/v_aspnasa_eh" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_aspnasa_eh"
+                    android:background="@drawable/v_aspinasa_e"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_toRightOf="@+id/v_aspnasa_ah"
+                    android:layout_toEndOf="@+id/v_aspnasa_ah" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:id="@+id/v_aspnasa_uh"
+                    android:background="@drawable/v_aspinasa_u"
+                    android:layout_alignBottom="@+id/v_aspnasa_ah"
+                    android:layout_toRightOf="@+id/v_aspnasa_ih"
+                    android:layout_toEndOf="@+id/v_aspnasa_ih" />
+
+                <Button
+                    android:id="@+id/fab"
+                    android:layout_width="@dimen/flecha"
+                    android:layout_height="40dp"
+                    android:layout_gravity="end|bottom"
+                    android:background="@drawable/ic_next"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.07"
+            android:src="@drawable/img_cinta_dos"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp" />
+
+            </LinearLayout>
+
+
+</FrameLayout>

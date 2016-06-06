@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo"
+    android:orientation="vertical"
+    tools:context=".fragments.nivelcuatro.UnirNumerosUnoActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_title"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="NIVEL 4"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="34sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/cinta_niveles"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout2">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_oros"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="35dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="x 0"
+                android:id="@+id/tv_puntos"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/cardview_dark_background"/>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/ic_avatarNiveles"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/linearLayout2"
+            android:layout_alignEnd="@+id/linearLayout2" />
+        <ImageView
+            android:layout_width="260dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="70dp"
+            android:onClick="irCuatroDos"
+            android:background="@drawable/num_correspondiente"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.77">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/txt_dos"
+            android:id="@+id/txt_dos"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/txt_siete"
+            android:layout_toEndOf="@+id/txt_siete" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/img_dos"
+            android:id="@+id/img_dos"
+            android:layout_marginLeft="30dp"
+            android:layout_marginBottom="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/img_nueve"
+            android:id="@+id/img_nueve"
+            android:layout_marginRight="26dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/txt_nueve"
+            android:id="@+id/txt_nueve"
+            android:layout_above="@+id/img_uno"
+            android:layout_alignLeft="@+id/img_dos"
+            android:layout_alignStart="@+id/img_dos" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/img_cuatro"
+            android:id="@+id/img_cuatro"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/txt_cuatro"
+            android:id="@+id/txt_cuatro"
+            android:layout_below="@+id/img_siete"
+            android:layout_alignLeft="@+id/img_nueve"
+            android:layout_alignStart="@+id/img_nueve" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/img_siete"
+            android:id="@+id/img_siete"
+            android:layout_above="@+id/img_dos"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/txt_siete"
+            android:id="@+id/txt_siete"
+            android:layout_below="@+id/txt_dos"
+            android:layout_toLeftOf="@+id/img_nueve"
+            android:layout_toStartOf="@+id/img_nueve" />
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/img_uno"
+            android:id="@+id/img_uno"
+            android:layout_marginLeft="20dp"
+            android:layout_above="@+id/img_siete"
+            android:layout_alignLeft="@+id/txt_nueve"
+            android:layout_alignStart="@+id/txt_nueve" />
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/txt_uno"
+            android:id="@+id/txt_uno"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:src="@drawable/img_cinta_dos"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
+</LinearLayout>

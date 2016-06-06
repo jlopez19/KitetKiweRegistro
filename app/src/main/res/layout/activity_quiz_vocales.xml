@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/fondo"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_title"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="NIVEL 1"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="34sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/cinta_niveles"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout2">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_oros"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="35dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:text="x 0"
+                android:id="@+id/tv_puntos"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/cardview_dark_background"/>
+        </LinearLayout>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/ic_avatarNiveles"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignRight="@+id/linearLayout2"
+            android:layout_alignEnd="@+id/linearLayout2" />
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="320dp"
+            android:layout_height="80dp"
+            android:src="@drawable/quiz"
+            android:onClick="comenzar"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/imageView7"/>
+        <RadioGroup
+        android:id="@+id/preguntas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/pregunta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/cardview_dark_background"
+            android:text="Pregunta"/>
+
+        <RadioButton
+            android:id="@+id/rb_respuesta1"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:text="respuesta1"/>
+
+        <RadioButton
+            android:id="@+id/rb_respuesta2"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:text="respuesta2"/>
+
+        <RadioButton
+            android:id="@+id/rb_respuesta3"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:textSize="20sp"
+            android:layout_height="wrap_content"
+            android:text="respuesta3"/>
+
+    </RadioGroup>
+
+
+        <Button
+            android:id="@+id/fab"
+            android:layout_width="@dimen/flecha"
+            android:layout_height="40dp"
+            android:layout_gravity="end|bottom"
+            android:background="@drawable/ic_next"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.07"
+        android:src="@drawable/img_cinta_dos"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp" />
+
+</LinearLayout>

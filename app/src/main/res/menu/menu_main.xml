@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveltres.MainActivity">
+    <item android:id="@+id/action_line"
+        android:title="action_line"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_smoothline"
+        android:title="action_smoothline"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+
+    <item android:id="@+id/action_rectangle"
+        android:title="action_rectangle"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_square"
+        android:title="action_square"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_circle"
+        android:title="action_circle"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/action_triangle"
+        android:title="action_triangle"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+</menu>

@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.QuizAFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cual es el numero diez?"
+            android:id="@+id/pregUnoNum"
+            android:textSize="25sp"
+            android:textColor="@color/cardview_dark_background"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntaUno">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Kseba"
+                android:id="@+id/rbNumTresP"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Je'z"
+                android:id="@+id/rbNumTresN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Kseb"
+                android:id="@+id/rbNumTresN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Pah"
+                android:id="@+id/rbNumTresN3"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" Cual es el numero ocho?"
+            android:id="@+id/pregDosNum"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_gravity="center" />
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntados"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Teecx"
+                android:id="@+id/rbNumCuatroN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Je'z"
+                android:id="@+id/rbNumCuatroN3"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Set"
+                android:id="@+id/rbNumCuatroN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Taw"
+                android:id="@+id/rbNumCuatroP"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</FrameLayout>

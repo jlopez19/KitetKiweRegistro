@@ -1,0 +1,103 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentCa"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.QuizAFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cuales son las consonantes basicas?"
+            android:id="@+id/pregUnoCon"
+            android:textSize="25sp"
+            android:textColor="@color/cardview_dark_background"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntaUnoC">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" P, t, ç, k, m, n, b, d, g, s, i, j, z, y, w, r"
+                android:id="@+id/rbBasicasP"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" P, x, tx, çx, kx, nx, bx, dx, gx, sx, lx"
+                android:id="@+id/rbBasicasN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Ph, th, çh, kh"
+                android:id="@+id/rbBasicasN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Pxh, txh, çxh, kxh"
+                android:id="@+id/rbBasicasN3"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cuales son las consonantes palatales?"
+            android:id="@+id/pregDosCon"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_gravity="center" />
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntadosC"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Pxh, txh, çxh, kxh "
+                android:id="@+id/rbPalatalesN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" P, x, tx, çx, kx, nx, bx, dx, gx, sx, lx"
+                android:id="@+id/rbPalatalesP"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" P, t, ç, k, m, n, b, d, g, s, i, j, z, y, w, r"
+                android:id="@+id/rbPalatalesN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Ph, th, çh, kh"
+                android:id="@+id/rbPalatalesN3"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+</FrameLayout>

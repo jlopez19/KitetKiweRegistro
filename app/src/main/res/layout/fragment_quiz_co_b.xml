@@ -1,0 +1,102 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragmentB"
+    tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.QuizBFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cual es el color amarillo?"
+            android:id="@+id/pregTresCol"
+            android:textSize="25sp"
+            android:textColor="@color/cardview_dark_background"/>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntaTres">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Cxkitx"
+                android:id="@+id/rbColorTresP"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" çẽy"
+                android:id="@+id/rbColorTresN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" khuç"
+                android:id="@+id/rbColorTresN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" Sxuma"
+                android:id="@+id/rbColorTresN3"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cual es el color blanco?"
+            android:id="@+id/pregCuatroCol"
+            android:textSize="22sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_gravity="center" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/rgPreguntaCuatro"
+            android:layout_gravity="center">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" khuç"
+                android:id="@+id/rbColorCuatroN2"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" çẽy"
+                android:id="@+id/rbColorCuatroN"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" çxihme"
+                android:id="@+id/rbColorCuatroP"
+                android:textSize="20dp" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text=" siunkwe"
+                android:id="@+id/rbColorCuatroN3"
+                android:textSize="20dp" />
+        </RadioGroup>
+
+    </LinearLayout>
+
+</FrameLayout>
