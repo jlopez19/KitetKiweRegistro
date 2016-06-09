@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Cuales son las vocales orales?"
         android:id="@+id/pregUnoVoc"
-        android:textSize="25sp"
+        android:textSize="35sp"
         android:textColor="@color/cardview_dark_background"/>
     <RadioGroup
         android:layout_width="match_parent"
@@ -26,28 +26,28 @@
             android:layout_height="30dp"
             android:text=" a,  e,  i,  u"
             android:id="@+id/rbOralesP"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" a‘,  e’,  i’,  u’"
             android:id="@+id/rbOralesN"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" ã,  ẽ,  ĩ,  ῦ"
             android:id="@+id/rbOralesN2"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" ã‘,  ẽ‘,  ĩ‘,  ῦ‘"
             android:id="@+id/rbOralesN3"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
     </RadioGroup>
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="Cuales son las vocales nasales?"
             android:id="@+id/pregDosVoc"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_gravity="center" />
@@ -73,28 +73,28 @@
             android:layout_height="30dp"
             android:text=" ãa,  ẽe,  ĩi ,  ῦu"
             android:id="@+id/rbNasalesN"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" a,  e,  i,  u"
             android:id="@+id/rbNasalesN2"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" ã,  ẽ,  ĩ,  ῦ"
             android:id="@+id/rbNasalesP"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:text=" aa,  ee,  ii  ,uu"
             android:id="@+id/rbNasalesN3"
-            android:textSize="20dp" />
+            android:textSize="30dp" />
     </RadioGroup>
 
 </LinearLayout>

@@ -43,7 +43,7 @@ GestorBd extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String tblUsuario = "create table " + TBLUSUARIO + "(" + IDUSUARIO + " INTEGER PRIMARY KEY AUTOINCREMENT, " + NOMUSUARIO + " TEXT, " +
-                CONTRASEÑAUSUARIO + " TEXT, " + PATHIMG + "TEXT, " + SESION +"TEXT);";
+                CONTRASEÑAUSUARIO + " TEXT, " + PATHIMG + " TEXT, " + SESION +" TEXT);";
 
         String tblPuntos="create table " + TBLPUNTOS + "(" + IDPUNTOS + " INTEGER PRIMARY KEY AUTOINCREMENT, " + PUNTOSOROS + " INTEGER, " + IDUSUARIOR + " INTEGER, FOREIGN KEY ( " + IDUSUARIOR + " ) REFERENCES " + TBLUSUARIO + "(" + IDUSUARIO +"))";
 
@@ -66,6 +66,8 @@ GestorBd extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(NOMUSUARIO, usuario.getNomUsuario());
         values.put(CONTRASEÑAUSUARIO, usuario.getContraUsuario());
+        values.put(PATHIMG, usuario.getPathImg());
+        values.put(SESION, usuario.getSesion());
         long pos = db.insert(TBLUSUARIO, null, values);
         db.close();
     }
@@ -130,9 +132,12 @@ GestorBd extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void actualizarActivity(String activity, int id){
+    public void actualizarActivity(String nombre, String contra, String pathimg, String activity, int id){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(NOMUSUARIO, nombre);
+        values.put(CONTRASEÑAUSUARIO, contra);
+        values.put(PATHIMG, pathimg);
         values.put(SESION, activity);
         db.update(TBLUSUARIO, values, IDUSUARIO + "='" + id + "'", null);
         db.close();
@@ -153,6 +158,21 @@ GestorBd extends SQLiteOpenHelper {
         return sesion;
     }
 
+    public String buscarAvatar(int id){
+        String avatar ="";
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = ("select " + PATHIMG + " from " + TBLUSUARIO + " where " + IDUSUARIO + " ='" + id + "'");
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst())
+
+        {
+            avatar = (cursor.getString(0));
+        }
+
+        db.close();
+        return avatar;
+    }
+
     public List<Usuario> datosUsuario(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = ("select * from "+ TBLUSUARIO + " WHERE " + IDUSUARIO + " ='"+id+"'");
@@ -160,8 +180,10 @@ GestorBd extends SQLiteOpenHelper {
         List<Usuario> usuarios = new ArrayList<Usuario>();
         if (cursor.moveToFirst()) {
             Usuario usu = new Usuario();
-
-            usu.setNomUsuario(cursor.getString(0));
+            usu.setNomUsuario(cursor.getString(1));
+            usu.setContraUsuario(cursor.getString(2));
+            usu.setPathImg(cursor.getString(3));
+            usu.setSesion(cursor.getString(4));
             usuarios.add(usu);
             cursor.moveToNext();
         }

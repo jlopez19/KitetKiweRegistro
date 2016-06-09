@@ -53,12 +53,16 @@
             android:layout_alignRight="@+id/linearLayout2"
             android:layout_alignEnd="@+id/linearLayout2" />
         <ImageView
-            android:layout_width="300dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
             android:background="@drawable/letra_faltante"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/imageView8"
+            android:onClick="irDos"
+            android:layout_below="@id/linearLayout2"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -67,22 +71,23 @@
         android:layout_weight="0.75">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="210dp"
             android:id="@+id/img_parca"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/img_huevos_uno"/>
         <ImageView
-            android:layout_width="69dp"
-            android:layout_height="90dp"
+            android:layout_width="72dp"
+            android:layout_height="95dp"
             android:id="@+id/img_huevoCol"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="9dp"
-            android:layout_marginLeft="120dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="225dp" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
             android:id="@+id/img_t2"
             android:background="@drawable/img_t2"
             android:layout_below="@+id/img_parca"
@@ -92,8 +97,8 @@
             android:layout_marginStart="40dp" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
             android:id="@+id/img_th2"
             android:background="@drawable/img_th2"
             android:layout_below="@+id/img_t2"
@@ -101,17 +106,18 @@
             android:layout_toEndOf="@+id/img_t2" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
             android:id="@+id/img_tx2"
             android:background="@drawable/img_tx2"
-            android:layout_alignTop="@+id/img_th2"
-            android:layout_toRightOf="@+id/img_huevoCol"
-            android:layout_toEndOf="@+id/img_huevoCol" />
+            android:layout_alignTop="@id/img_th2"
+            android:layout_toRightOf="@id/img_th2"
+            android:layout_marginLeft="30dp"
+            android:layout_toEndOf="@id/img_huevoCol" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+            android:layout_width="120dp"
+            android:layout_height="130dp"
             android:id="@+id/img_txh2"
             android:background="@drawable/img_txh2"
             android:layout_above="@+id/img_tx2"

@@ -36,8 +36,8 @@ public class AdaptadorImagenes extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView =new ImageView(context);
         imageView.setBackgroundResource(imagenes[position]);
-        imageView.setLayoutParams(new GridView.LayoutParams(155,
-                195));
+        imageView.setLayoutParams(new GridView.LayoutParams(135,
+                145));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         return imageView;
     }

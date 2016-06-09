@@ -13,7 +13,7 @@
             android:layout_height="wrap_content"
             android:text="Cuales son las consonantes basicas?"
             android:id="@+id/pregUnoCon"
-            android:textSize="25sp"
+            android:textSize="35sp"
             android:textColor="@color/cardview_dark_background"/>
         <RadioGroup
             android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="Cuales son las consonantes palatales?"
             android:id="@+id/pregDosCon"
-            android:textSize="22sp"
+            android:textSize="35sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/cardview_dark_background"
             android:layout_gravity="center" />

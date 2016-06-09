@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragments.nivelcuatro.LaberintoActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,13 +22,13 @@
 
         <activity android:name=".activities.RegistrarseActivity" />
         <activity android:name=".activities.AvatarActivity" />
-        <activity android:name=".activities.LogingActivity" />
+        <activity android:name=".fragments.nivelcuatro.LaberintoActivity" />
         <activity android:name=".activities.MenuActivity" />
         <activity android:name=".activities.SimbolosActivity" />
         <activity android:name=".activities.NivelesActivity" />
         <activity android:name=".fragments.niveluno.VocalesActivity" />
         <activity android:name=".fragments.niveluno.Niveles11Activity" />
-        <activity android:name=".activities.SplashActivity" />
+        <activity android:name=".activities.LogingActivity" />
         <activity android:name=".fragments.niveluno.VocalesColiActivity" />
         <activity android:name=".activities.MusicaActivity" />
         <activity android:name=".activities.ImagenesActivity" />

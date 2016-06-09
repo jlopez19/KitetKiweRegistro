@@ -1,11 +1,9 @@
 package com.fup.jennyferlopez.proyectokitetkiwe.activities;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +22,9 @@ public class RegistrarseActivity extends AppCompatActivity {
     EditText nombreUsuario, contraseña;
     Button btn_registrar, btn_cancelar;
     TextView tvNombre, tvContra;
-
+    String activity;
+    String pathimg;
+    String activitydos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +46,17 @@ public class RegistrarseActivity extends AppCompatActivity {
         btn_registrar.setTypeface(font);
         tvNombre.setTypeface(font);
         tvContra.setTypeface(font);
-
+        activity= String.valueOf(RegistrarseActivity.class);
+        activitydos="RegistrarseActivity";
     }
 
 
     public void registrar(View view) {
+        pathimg= String.valueOf(R.drawable.avatar_blanco);
         String nombreUsu = nombreUsuario.getText().toString();
         String contra = contraseña.getText().toString();
-
-        Usuario usuario= new Usuario(nombreUsu,contra);
-        bd. agregarUsuario(usuario);
+        Usuario usuario= new Usuario(nombreUsu, contra, pathimg,  activitydos);
+        bd.agregarUsuario(usuario);
         nombreUsuario.setText(null);
         contraseña.setText(null);
         Toast.makeText(this, "Registro satisfactorio", Toast.LENGTH_SHORT).show();

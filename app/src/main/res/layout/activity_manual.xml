@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fondo"
+    android:orientation="vertical"
     tools:context="com.fup.jennyferlopez.proyectokitetkiwe.activities.ManualActivity">
     <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:src="@drawable/barra_manual"/>
-
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:background="@drawable/barra_manual"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.82"></LinearLayout>
 
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:src="@drawable/img_cinta_dos"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_centerHorizontal="true" />
-</RelativeLayout>
+        android:layout_height="0dp"
+        android:layout_weight="0.08"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="29dp"
+        android:src="@drawable/img_cinta_dos"/>
+</LinearLayout>

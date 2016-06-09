@@ -103,26 +103,8 @@
                 android:layout_above="@+id/nv_col_i"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="95dp"
-                android:src="@drawable/txt_azul"
-                android:id="@+id/nv_col_i"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/nv_col_e"
-                android:layout_alignEnd="@+id/nv_col_e"
-                android:layout_alignLeft="@+id/nv_col_a"
-                android:layout_alignStart="@+id/nv_col_a" />
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="85dp"
-                android:src="@drawable/img_crojo"
-                android:id="@+id/ns_col_e"
-                android:layout_alignParentBottom="true"
-                android:layout_alignRight="@+id/ns_col_a"
-                android:layout_alignEnd="@+id/ns_col_a" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="95dp"
@@ -142,16 +124,33 @@
                 android:layout_above="@+id/nv_col_a"
                 android:layout_alignRight="@+id/ns_col_i"
                 android:layout_alignEnd="@+id/ns_col_i" />
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="95dp"
                 android:src="@drawable/txt_negro"
                 android:id="@+id/nv_col_u"
-                android:layout_marginRight="35dp"
-                android:layout_above="@+id/nv_col_e"
+                android:layout_below="@+id/imageView8"
                 android:layout_alignLeft="@+id/nv_col_e"
                 android:layout_alignStart="@+id/nv_col_e" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="85dp"
+                android:src="@drawable/img_crojo"
+                android:id="@+id/ns_col_e"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/ns_col_i"
+                android:layout_alignStart="@+id/ns_col_i" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="95dp"
+                android:src="@drawable/txt_azul"
+                android:id="@+id/nv_col_i"
+                android:layout_alignParentBottom="true"
+                android:layout_alignLeft="@+id/nv_col_a"
+                android:layout_alignStart="@+id/nv_col_a" />
 
 
         </RelativeLayout>

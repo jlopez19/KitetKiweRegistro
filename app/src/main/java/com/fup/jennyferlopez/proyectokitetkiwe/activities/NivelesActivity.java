@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -24,12 +25,13 @@ import java.util.List;
 public class NivelesActivity extends AppCompatActivity implements View.OnClickListener{
 
     SharedPreferences preferences;
-    String avatarSeleccionado, userName;
+    String avatarSeleccionado;
     ImageView correAvaatr, icAvatarNiveles;
     RelativeLayout rlLayout;
     TextView tv_puntos;
-    int id_user;
     GestorBd db;
+    String userName, activity, pass, pathImg;
+    int id_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,9 @@ public class NivelesActivity extends AppCompatActivity implements View.OnClickLi
         rlLayout= (RelativeLayout) findViewById(R.id.lyNivel1);
         loadPreference();
         cargarTextV();
+        actualizarActivity();
     }
+
     private void cargarTextV() {
         id_user =db.obtenerId(userName);
         db.eliminarPuntaje(id_user);
@@ -63,6 +67,7 @@ public class NivelesActivity extends AppCompatActivity implements View.OnClickLi
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");
         userName =preferences.getString(Preference.USER_NAME, "");
 
+      //  avatarSeleccionado=db.buscarAvatar(id_user);
 
         if (avatarSeleccionado.equals(null)) {
             correAvaatr.setBackgroundResource(Integer.parseInt(null));
@@ -98,5 +103,36 @@ public class NivelesActivity extends AppCompatActivity implements View.OnClickLi
             db.insertarPuntos(puntos);
             finish();
         }
+    }
+    private void actualizarActivity() {
+        activity= "NivelesActivity";
+        userName =preferences.getString(Preference.USER_NAME, "");
+        id_user =preferences.getInt(Preference.USER_ID, 0);
+        pass =preferences.getString(Preference.PASSWORD, "");
+
+        if (avatarSeleccionado.equals(null)) {
+            pathImg= String.valueOf(R.drawable.avatar_blanco);
+        } else if (avatarSeleccionado.equals("1")) {
+            pathImg= String.valueOf(R.drawable.nino_uno_n);
+        } else if (avatarSeleccionado.equals("2")) {
+            pathImg= String.valueOf(R.drawable.nino_dos_n);
+        } else if (avatarSeleccionado.equals("3")) {
+            pathImg= String.valueOf(R.drawable.nino_tres_n);
+        } else if (avatarSeleccionado.equals("4")) {
+            pathImg= String.valueOf(R.drawable.nina_uno_n);
+        } else if (avatarSeleccionado.equals("5")) {
+            pathImg= String.valueOf(R.drawable.nina_dos_n);
+        } else if (avatarSeleccionado.equals("6")) {
+            pathImg= String.valueOf(R.drawable.nina_tres_n);
+        }
+        db.actualizarActivity(userName , pass, pathImg, activity, id_user);
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent irMenu=new Intent(getApplication(), MenuActivity.class);
+            startActivity(irMenu);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

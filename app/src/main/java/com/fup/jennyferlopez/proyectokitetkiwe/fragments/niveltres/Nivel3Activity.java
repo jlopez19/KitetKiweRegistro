@@ -6,12 +6,14 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
+import com.fup.jennyferlopez.proyectokitetkiwe.activities.MenuActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.ConsonantesActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
@@ -22,9 +24,10 @@ import java.util.List;
 public class Nivel3Activity extends AppCompatActivity implements View.OnClickListener{
 
     SharedPreferences preferences;
-    String avatarSeleccionado, userName;
+    String avatarSeleccionado;
     ImageView correAvaatr, icAvatarNiveles;
     TextView tv_puntos;
+    String userName, activity, pass, pathImg;
     int id_user;
     GestorBd db;
     @Override
@@ -42,6 +45,7 @@ public class Nivel3Activity extends AppCompatActivity implements View.OnClickLis
 
         loadPreference();
         cargarTextV();
+        actualizarActivity();
     }
     private void cargarTextV() {
         id_user =db.obtenerId(userName);
@@ -87,5 +91,21 @@ public class Nivel3Activity extends AppCompatActivity implements View.OnClickLis
             Intent ircolores= new Intent(getApplication(), ColoresActivity.class);
             startActivity(ircolores);
         }
+    }
+    private void actualizarActivity() {
+        activity= "Nivel3Activity";
+        userName =preferences.getString(Preference.USER_NAME, "");
+        id_user =preferences.getInt(Preference.USER_ID, 0);
+        pass =preferences.getString(Preference.PASSWORD, "");
+
+        db.actualizarActivity(userName , pass, avatarSeleccionado, activity, id_user);
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent irMenu=new Intent(getApplication(), MenuActivity.class);
+            startActivity(irMenu);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

@@ -68,22 +68,20 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.15"
-                android:src="@drawable/voc_aspiradas"
-                android:gravity="center_horizontal"/>
+                android:layout_height="90dp"
+                android:background="@drawable/img_caspiradas"
+                android:id="@+id/imageView8"
+                android:layout_below="@id/linearLayout2"
+                android:layout_marginBottom="50dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.3"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:background="@drawable/con_aspi_ch"
-                    android:id="@+id/c_asp_ch"
-                    android:layout_marginLeft="20dp"/>
                 <ImageView
                     android:layout_width="@dimen/w_vocal"
                     android:layout_height="@dimen/h_vocal"
@@ -109,6 +107,15 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@+id/c_asp_ph"
                     android:layout_toEndOf="@+id/c_asp_ph" />
+
+                <ImageView
+                    android:layout_width="@dimen/w_vocal"
+                    android:layout_height="@dimen/h_vocal"
+                    android:background="@drawable/con_aspi_ch"
+                    android:id="@+id/c_asp_ch"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="130dp"
+                     />
             </RelativeLayout>
 
 
@@ -130,13 +137,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/flecha"
                     android:src="@drawable/img_left"
-                    android:layout_marginLeft="18dp"
+                    android:layout_marginLeft="28dp"
                     android:gravity="center_horizontal"/>
                 <ImageView
-                    android:layout_width="245dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/voc_nasales_asp"
-                    android:gravity="center_horizontal"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:background="@drawable/img_cpaspiradas"
+                    android:layout_below="@id/linearLayout2"
+                    android:layout_marginBottom="50dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="50dp"
+                    />
             </LinearLayout>
 
 
@@ -150,10 +161,8 @@
                     android:layout_height="@dimen/h_vocal"
                     android:id="@+id/c_aspal_cxh"
                     android:background="@drawable/con_aspal_cxh"
-                    android:layout_marginLeft="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_marginLeft="130dp"
+                    android:layout_alignParentTop="true"/>
 
                 <ImageView
                     android:layout_width="@dimen/w_vocal"
@@ -187,11 +196,11 @@
                 <Button
                     android:id="@+id/fab"
                     android:layout_width="@dimen/flecha"
-                    android:layout_height="40dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="end|bottom"
                     android:background="@drawable/ic_next"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="60dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
@@ -201,11 +210,11 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.07"
+            android:layout_height="wrap_content"
             android:src="@drawable/img_cinta_dos"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp" />
+            android:layout_marginRight="29dp"
+            android:layout_marginLeft="29dp"
+            android:id="@+id/imageView6" />
 
     </LinearLayout>
 

@@ -1,18 +1,23 @@
 package com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Layout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
+import com.fup.jennyferlopez.proyectokitetkiwe.activities.LogingActivity;
+import com.fup.jennyferlopez.proyectokitetkiwe.activities.MenuActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.activities.NivelesActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
@@ -23,11 +28,13 @@ import java.util.List;
 public class Niveles11Activity extends AppCompatActivity implements View.OnClickListener{
 
     SharedPreferences preferences;
-    String avatarSeleccionado, userName;
+    private String avatarSeleccionado, userName, pass,pathImg;
     TextView  tv_puntos;
-    ImageView correAvaatr, icAvatarNiveles;
+    private ImageView correAvaatr, icAvatarNiveles;
     GestorBd db;
     int id_user;
+
+    String activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +49,17 @@ public class Niveles11Activity extends AppCompatActivity implements View.OnClick
         Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
         tv_puntos.setTypeface(font);
         correAvaatr.setOnClickListener(this);
-
+        activity="Niveles11Activity";
         loadPreference();
         cargarTextV();
+        actualizarActivity();
+    }
+    private void actualizarActivity() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        id_user =preferences.getInt(Preference.USER_ID, 0);
+        pass =preferences.getString(Preference.PASSWORD, "");
+
+        db.actualizarActivity(userName , pass, avatarSeleccionado, activity, id_user);
     }
     private void cargarTextV() {
         id_user =db.obtenerId(userName);
@@ -92,4 +107,13 @@ public class Niveles11Activity extends AppCompatActivity implements View.OnClick
             finish();
         }
     }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+           Intent irMenu=new Intent(getApplication(), MenuActivity.class);
+            startActivity(irMenu);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

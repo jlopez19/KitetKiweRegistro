@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
+import com.fup.jennyferlopez.proyectokitetkiwe.activities.MenuActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
@@ -22,8 +24,9 @@ public class Niveles14Activity extends AppCompatActivity implements View.OnClick
     TextView  tv_puntos;
     ImageView correAvaatr, icAvatarNiveles;
     SharedPreferences preferences;
-    String avatarSeleccionado, userName;
+    String avatarSeleccionado;
     GestorBd db;
+    String userName, activity, pass, pathImg;
     int id_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,14 @@ public class Niveles14Activity extends AppCompatActivity implements View.OnClick
 
         loadPreference();
         cargarTextV();
+        actualizarActivity();
+    }
+    private void actualizarActivity() {
+        activity= "Niveles14Activity";
+        userName =preferences.getString(Preference.USER_NAME, "");
+        id_user =preferences.getInt(Preference.USER_ID, 0);
+        pass =preferences.getString(Preference.PASSWORD, "");
+        db.actualizarActivity(userName , pass, avatarSeleccionado, activity, id_user);
     }
     private void cargarTextV() {
         id_user =db.obtenerId(userName);
@@ -86,5 +97,13 @@ public class Niveles14Activity extends AppCompatActivity implements View.OnClick
             startActivity(vocalImagen);
             finish();
         }
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            Intent irMenu=new Intent(getApplication(), MenuActivity.class);
+            startActivity(irMenu);
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

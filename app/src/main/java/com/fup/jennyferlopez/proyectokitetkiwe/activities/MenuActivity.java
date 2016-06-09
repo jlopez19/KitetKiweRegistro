@@ -19,14 +19,17 @@ import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.DialogFragmentAvatar;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.Nivel2Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles11Activity;
+import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
 
 public class MenuActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView cambiar_avatar, glosario, himno, jugar, galeria, simbolos, manual_usuario;
     SharedPreferences preferences;
-    String avatarSeleccionado, userName;
-
+    String avatarSeleccionado;
+    GestorBd bd;
+    String userName, activity, pass, pathImg;
+    int id_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,7 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
         galeria=(ImageView)findViewById(R.id.galeriaFotos);
         simbolos=(ImageView)findViewById(R.id.simbolos);
         manual_usuario=(ImageView)findViewById(R.id.manualDeUsuario);
+        bd=new GestorBd(getApplicationContext());
 
         cambiar_avatar.setOnClickListener(this);
         glosario.setOnClickListener(this);
@@ -50,7 +54,17 @@ public class MenuActivity extends AppCompatActivity implements View.OnClickListe
 
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         loadPreference();
+        actualizarActivity();
     }
+
+    private void actualizarActivity() {
+        activity= "MenuActivity";
+        userName =preferences.getString(Preference.USER_NAME, "");
+        id_user =preferences.getInt(Preference.USER_ID, 0);
+        pass =preferences.getString(Preference.PASSWORD, "");
+        bd.actualizarActivity(userName , pass, avatarSeleccionado, activity, id_user);
+    }
+
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");

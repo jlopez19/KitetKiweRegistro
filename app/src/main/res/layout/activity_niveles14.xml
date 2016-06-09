@@ -46,9 +46,10 @@
         android:layout_width="70dp"
         android:layout_height="120dp"
         android:id="@+id/correAvatar"
-        android:layout_marginBottom="123dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginBottom="210dp"
+        android:layout_marginLeft="270dp"
+        />
 
 
 </RelativeLayout>

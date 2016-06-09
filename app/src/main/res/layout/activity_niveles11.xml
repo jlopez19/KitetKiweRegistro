@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/escenario_unou"
     tools:context="com.fup.jennyferlopez.proyectokitetkiwe.activities.NivelesActivity">
 
 
@@ -46,12 +47,9 @@
         android:layout_width="70dp"
         android:layout_height="120dp"
         android:id="@+id/correAvatar"
-        android:layout_marginBottom="109dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginStart="51dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/linearLayout2"
-        android:layout_alignStart="@+id/linearLayout2" />
+        android:layout_marginBottom="190dp"
+        android:layout_marginLeft="140dp"
+        android:layout_alignParentBottom="true" />
 
 
 
