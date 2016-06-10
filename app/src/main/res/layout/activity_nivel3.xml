@@ -48,11 +48,12 @@
         android:layout_width="70dp"
         android:layout_height="120dp"
         android:id="@+id/correAvatar"
-        android:layout_marginBottom="77dp"
+        android:layout_marginBottom="146dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/ic_avatarNiveles"
-        android:layout_alignStart="@+id/ic_avatarNiveles" />
-
+        android:layout_alignRight="@+id/ic_avatarNiveles"
+        android:layout_alignEnd="@+id/ic_avatarNiveles"
+        android:layout_marginRight="45dp"
+        android:layout_marginEnd="45dp" />
 
 
 </RelativeLayout>

@@ -5,111 +5,145 @@
     android:background="@drawable/fondo"
     tools:context="com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.VocalesDosFragment">
 
+
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
-    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.15">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_title"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="NIVEL 1"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="34sp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/cinta_niveles"
-            android:orientation="horizontal"
-            android:id="@+id/linearLayout2">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_oros"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="35dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="x 0"
-                android:id="@+id/tv_puntos"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/cardview_dark_background"/>
-        </LinearLayout>
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:id="@+id/ic_avatarNiveles"
-            android:layout_marginTop="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignRight="@+id/linearLayout2"
-            android:layout_alignEnd="@+id/linearLayout2" />
+                android:id="@+id/tv_title"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="NIVEL 1"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/cardview_dark_background"
+                android:textSize="34sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/cinta_niveles"
+                android:orientation="horizontal"
+                android:id="@+id/linearLayout2">
 
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_oros"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="35dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:text="x 0"
+                    android:id="@+id/tv_puntos"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/cardview_dark_background"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="100dp"
+                android:id="@+id/ic_avatarNiveles"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@+id/linearLayout2"
+                android:layout_alignEnd="@+id/linearLayout2" />
 
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.32"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:src="@drawable/voc_concierrglo"
+                    android:gravity="center_horizontal"/>
 
-            <ImageView
+            </LinearLayout>
+
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.15"
-                android:src="@drawable/voc_concierrglo"
-                android:gravity="center_horizontal"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.10"
                 android:orientation="horizontal">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:background="@drawable/v_cierreglo_a"
+                        android:id="@+id/v_glotal_a"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/v_glotal_i"
+                        android:background="@drawable/v_cierreglo_i"
+                         />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:background="@drawable/v_cierreglo_e"
+                        android:id="@+id/v_glotal_e"
+                     />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.18"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:background="@drawable/v_cierreglo_a"
-                    android:id="@+id/v_glotal_a"
-                    android:layout_marginLeft="20dp"/>
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/v_glotal_i"
-                    android:background="@drawable/v_cierreglo_i"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/v_glotal_e"
-                    android:layout_toEndOf="@+id/v_glotal_e" />
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:background="@drawable/v_cierreglo_e"
-                    android:id="@+id/v_glotal_e"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/v_glotal_a"
-                    android:layout_toEndOf="@+id/v_glotal_a" />
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/v_glotal_u"
+                        android:background="@drawable/v_cierreglo_u"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+            </TableLayout>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/v_glotal_u"
-                    android:background="@drawable/v_cierreglo_u"
-                    android:layout_alignTop="@+id/v_glotal_e"
-                    android:layout_toRightOf="@+id/v_glotal_i"
-                    android:layout_toEndOf="@+id/v_glotal_i" />
-            </RelativeLayout>
 
         </LinearLayout>
 
@@ -117,72 +151,114 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="0.35"
-            >
+            android:layout_weight="0.35"            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.14"
+                android:layout_weight="0.02"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
                     android:layout_height="@dimen/flecha"
                     android:src="@drawable/img_left"
-                    android:layout_marginLeft="18dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"/>
+
                 <ImageView
-                    android:layout_width="245dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/voc_nasconcg"
-                    android:gravity="center_horizontal"/>
-                <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
                     android:layout_height="@dimen/flecha"
+                    android:layout_marginRight="20dp"
                     android:src="@drawable/img_right"
+                    android:gravity="left"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="110dp"
+                    android:src="@drawable/voc_nasconcg"
                     android:gravity="center_horizontal"/>
             </LinearLayout>
 
-            <RelativeLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3">
+                android:layout_weight="0.10"
+                android:orientation="horizontal">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/n_glotal_a"
-                    android:background="@drawable/v_nasalcg_a"
-                    android:layout_marginLeft="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/n_glotal_a"
+                        android:background="@drawable/v_nasalcg_a"
+                     />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/n_glotal_i"
-                    android:background="@drawable/v_nasalcg_i"
-                    android:layout_marginTop="40dp"
-                    android:layout_toRightOf="@+id/n_glotal_e" />
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/n_glotal_e"
+                        android:background="@drawable/v_nasalcg_e"
+                       />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.05"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/n_glotal_i"
+                        android:background="@drawable/v_nasalcg_i"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/n_glotal_e"
-                    android:background="@drawable/v_nasalcg_e"
-                    android:layout_marginTop="25dp"
-                    android:layout_toRightOf="@+id/n_glotal_a" />
-
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/n_glotal_u"
-                    android:background="@drawable/v_nasalcg_u"
-                    android:layout_below="@+id/n_glotal_a"
-                    android:layout_toRightOf="@+id/n_glotal_i"
-                    android:layout_toEndOf="@+id/n_glotal_i" />
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/n_glotal_u"
+                        android:background="@drawable/v_nasalcg_u"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
+
 
 
         <ImageView
@@ -192,8 +268,7 @@
             android:src="@drawable/img_cinta_dos"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp" />
-        </LinearLayout>
-
+    </LinearLayout>
 
 
 </FrameLayout>

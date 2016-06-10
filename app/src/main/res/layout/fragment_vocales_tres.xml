@@ -14,19 +14,20 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15">
+            android:layout_weight="0.1">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_title"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="NIVEL 1"
+                android:textStyle="bold"
                 android:layout_marginTop="5dp"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="34sp"/>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
                 android:layout_marginRight="20dp"
@@ -36,14 +37,14 @@
 
                 <ImageView
                     android:layout_width="30dp"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/ic_oros"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="35dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:text="x 0"
                     android:id="@+id/tv_puntos"
                     android:layout_gravity="center_vertical"
@@ -51,7 +52,7 @@
             </LinearLayout>
             <ImageView
                 android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_height="100dp"
                 android:id="@+id/ic_avatarNiveles"
                 android:layout_marginTop="20dp"
                 android:layout_alignParentTop="true"
@@ -63,55 +64,85 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.32"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    android:src="@drawable/voc_nasales_alar"
+                    android:gravity="center_horizontal"/>
 
-            <ImageView
+            </LinearLayout>
+
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.12"
-                android:src="@drawable/voc_nasales_alar"
-                android:gravity="center_horizontal"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.10"
                 android:orientation="horizontal">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:background="@drawable/v_nasalesa_a"
+                        android:id="@+id/c_asp_ch"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:background="@drawable/v_nasalesa_e"
+                        android:id="@+id/c_asp_kh"
+                       />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5"
+                    >
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.25"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_asp_ph"
+                        android:background="@drawable/v_nasalesa_i"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.18"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:background="@drawable/v_nasalesa_a"
-                    android:id="@+id/c_asp_ch"
-                    android:layout_marginLeft="20dp"/>
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_asp_ph"
-                    android:background="@drawable/v_nasalesa_i"
-                    android:layout_marginTop="35dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/c_asp_kh"
-                    android:layout_toEndOf="@+id/c_asp_kh" />
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:background="@drawable/v_nasalesa_e"
-                    android:id="@+id/c_asp_kh"
-                    android:layout_marginTop="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/c_asp_ch"
-                    android:layout_toEndOf="@+id/c_asp_ch" />
-
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_asp_th"
-                    android:background="@drawable/v_nasalesa_u"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@+id/c_asp_ph"
-                    android:layout_toEndOf="@+id/c_asp_ph" />
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_asp_th"
+                        android:background="@drawable/v_nasalesa_u"
+                    />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+            </TableLayout>
 
 
         </LinearLayout>
@@ -120,71 +151,112 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="0.35"
-            >
+            android:layout_weight="0.35"            >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.12"
+                android:layout_weight="0.02"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
                     android:layout_height="@dimen/flecha"
                     android:src="@drawable/img_left"
-                    android:layout_marginLeft="18dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"/>
+
                 <ImageView
-                    android:layout_width="245dp"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/voc_ora_alar"
-                    android:gravity="center_horizontal"/>
-                <ImageView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
                     android:layout_height="@dimen/flecha"
+                    android:layout_marginRight="20dp"
                     android:src="@drawable/img_right"
+                    android:gravity="left"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.05">
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="110dp"
+                    android:src="@drawable/voc_ora_alar"
                     android:gravity="center_horizontal"/>
             </LinearLayout>
 
-            <RelativeLayout
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.3">
+                android:layout_weight="0.10"
+                android:orientation="horizontal">
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_aspal_cxh"
-                    android:background="@drawable/v_oralesa_a"
-                    android:layout_marginLeft="20dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_aspal_cxh"
+                        android:background="@drawable/v_oralesa_a"
+                       />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_aspal_txh"
-                    android:background="@drawable/v_oralesa_i"
-                    android:layout_marginTop="40dp"
-                    android:layout_toRightOf="@+id/c_aspal_kxh" />
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_aspal_kxh"
+                        android:background="@drawable/v_oralesa_e"
+                       />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.5">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.05"/>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_aspal_txh"
+                        android:background="@drawable/v_oralesa_i"
+                         />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.15"/>
 
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_aspal_kxh"
-                    android:background="@drawable/v_oralesa_e"
-                    android:layout_marginTop="25dp"
-                    android:layout_toRightOf="@+id/c_aspal_cxh" />
-
-                <ImageView
-                    android:layout_width="@dimen/w_vocal"
-                    android:layout_height="@dimen/h_vocal"
-                    android:id="@+id/c_aspal_pxh"
-                    android:background="@drawable/v_oralesa_u"
-                    android:layout_below="@+id/c_aspal_cxh"
-                    android:layout_toRightOf="@+id/c_aspal_txh"
-                    android:layout_toEndOf="@+id/c_aspal_txh" />
-            </RelativeLayout>
+                    <ImageView
+                        android:layout_width="@dimen/w_vocal"
+                        android:layout_height="@dimen/h_vocal"
+                        android:id="@+id/c_aspal_pxh"
+                        android:background="@drawable/v_oralesa_u"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"/>
+                </TableRow>
+            </TableLayout>
         </LinearLayout>
 
 
@@ -197,6 +269,5 @@
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp" />
     </LinearLayout>
-
 
 </FrameLayout>

@@ -8,26 +8,51 @@
     tools:context=".activities.AvatarActivity">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:src="@drawable/img_cinta_dos"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ESCOGE TU AVATAR"
-        android:textSize="22sp"
-        android:layout_gravity="center_horizontal"
-        android:textColor="@color/cardview_dark_background"
-        android:id="@+id/escojer_a"/>
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.06">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="50dp"
+            android:background="@drawable/img_cinta_dos"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.02"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ESCOGE TU AVATAR"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:textColor="@color/cardview_dark_background"
+            android:id="@+id/escojer_a"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="@dimen/content"
-            android:layout_height="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="50dp"
             android:text="~MUJER~"
             android:background="@drawable/btn_mujer"
             android:textSize="20sp"
@@ -38,9 +63,14 @@
             android:layout_marginStart="40dp"
             android:id="@+id/btn_mujer" />
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"/>
         <Button
-            android:layout_width="@dimen/content"
-            android:layout_height="45dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.4"
+            android:layout_height="50dp"
             android:text="~HOMBRE~"
             android:background="@drawable/btn_hombre"
             android:textSize="20sp"
@@ -50,54 +80,100 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="40dp"
             android:layout_marginEnd="40dp" />
-    </RelativeLayout>
+    </LinearLayout>
 
-    <ImageView
-        android:layout_width="110dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/imgAvatar"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_weight="0.2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="400dp"
+            android:layout_weight="0.4"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/imgAvatar"
+            android:background="@drawable/avatar_blanco"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"/>
+    </LinearLayout>
 
-    <ScrollView
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/img_unoC"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="25dp"
+            android:id="@+id/img_dos"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/img_tres"/>
+
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/img_unoC"/>
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.9"
+            android:text="~Aceptar~"
+            android:layout_margin="@dimen/padding"
+            android:id="@+id/btn_guardarAvatar"
+            android:textSize="22sp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/btn_mujer"
+            android:textColor="@color/cardview_dark_background"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+    </LinearLayout>
 
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="25dp"
-                android:id="@+id/img_dos"/>
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/img_tres"/>
-
-        </LinearLayout>
-    </ScrollView>
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:text="~Aceptar~"
-        android:layout_margin="@dimen/padding"
-        android:id="@+id/btn_guardarAvatar"
-        android:textSize="22sp"
-        android:layout_gravity="bottom"
-        android:background="@drawable/btn_mujer"
-        android:textColor="@color/cardview_dark_background"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:src="@drawable/img_cinta_dos"/>
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="0.08">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="0.95"
+            android:layout_height="50dp"
+            android:background="@drawable/img_cinta_dos"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"/>
+    </LinearLayout>
 </LinearLayout>
