@@ -30,10 +30,10 @@ public class SonCorresNumActivity extends AppCompatActivity implements View.OnCl
     TextView tv_puntos;
     ImageView icAvatarNiveles, ic_play;
     ImageView img_uno, img_dos, img_tres,img_cuatro, img_cinco, img_seis, img_siete, img_ocho, img_nueve, img_diez;
-    TextView tv_title;
-    GestorBd db;
     int i =0, num;
     int sonidos[]= new int[10];
+    TextView tv_title;
+    GestorBd db;
     int cont_intentos=0, cont_good=0, cont_fail=0, id_user;
 
     @Override

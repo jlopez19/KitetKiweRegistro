@@ -123,6 +123,7 @@ public class VocalesCuatroFragment extends Fragment implements View.OnClickListe
         if (v.getId() == R.id.v_asp_ah) {
             MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.v_asp_a);
             mp.start();
+
         }else if (v.getId() == R.id.v_asp_eh) {
             MediaPlayer mp = MediaPlayer.create(getActivity(), R.raw.v_asp_e);
             mp.start();
