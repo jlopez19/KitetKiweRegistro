@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -21,9 +24,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveltres.ColorCorresAc
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles12Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class UnirPuntosActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -32,7 +40,7 @@ public class UnirPuntosActivity extends AppCompatActivity implements View.OnClic
     TextView tv_puntos;
     ImageView icAvatarNiveles,imgAyuda;
     TextView tv_title;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     protected DrawingView mDrawingView;
     int cont_intentos=0, cont_good=0, cont_fail=0, id_user;
     ImageView img_uno, img_dos, img_tres, img_cuatro, img_cinco, img_seis, img_siete, img_ocho, img_nueve, img_diez, paint;
@@ -41,7 +49,6 @@ public class UnirPuntosActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unir_puntos);
-        db=new GestorBd(getApplication());
 
         paint = (ImageView) findViewById(R.id.imgCinco);
         img_uno = (ImageView) findViewById(R.id.img_1);
@@ -79,8 +86,23 @@ public class UnirPuntosActivity extends AppCompatActivity implements View.OnClic
 
 
         loadPreference();
-        cargarTextV();
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -94,13 +116,6 @@ public class UnirPuntosActivity extends AppCompatActivity implements View.OnClic
         Intent irActivity= new Intent(UnirPuntosActivity.this, SplashTodosActivity.class);
         irActivity.putExtras(b);
         startActivity(irActivity);
-    }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
     }
 
     private void loadPreference() {
@@ -125,42 +140,14 @@ public class UnirPuntosActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-
-    private void cargarPuntos() {
-        if (cont_good ==4) {
-            Intent irMenu = new Intent(getApplication(), Niveles12Activity.class);
-            startActivity(irMenu);
-            finish();
-        }if (cont_good==4 && cont_intentos ==4){
-            Puntos puntos= new Puntos(id_user, 3);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+          //  servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
             tv_puntos.setText(""+ p);
-        }else if (cont_good==4 && (cont_intentos >4 || cont_intentos <7)){
-            id_user =db.obtenerId(userName);
-            Puntos puntos= new Puntos(id_user, 2);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-        }else if (cont_good==4 && (cont_intentos >=7 || cont_intentos <=10)){
-            id_user =db.obtenerId(userName);
-            Puntos puntos= new Puntos(id_user, 1);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-        }else if (cont_good<4 && cont_intentos >10){
-            // toastWarning();
         }
-    }
-
-
-
-    public void irCuatroTres(View view) {
-        Intent irCuatroDos=new Intent(this,Nivel43Activity.class);
-        startActivity(irCuatroDos);
     }
 
     @Override

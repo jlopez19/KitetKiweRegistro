@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -19,9 +22,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.activities.SplashTodosActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles14Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class CompletaPalabraActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,12 +39,11 @@ public class CompletaPalabraActivity extends AppCompatActivity implements View.O
     ImageView icAvatarNiveles, img_ph, img_p, img_h, img_kx, img_th, img_ch,imgAyuda;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completa_palabra);
-        db=new GestorBd(getApplication());
         img_ph=(ImageView)findViewById(R.id.img_ph);
         img_p=(ImageView)findViewById(R.id.img_p);
         img_h=(ImageView)findViewById(R.id.img_h);
@@ -60,10 +67,24 @@ public class CompletaPalabraActivity extends AppCompatActivity implements View.O
         img_ch.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
         loadSplash();
+        loadRealm();
+        loadPuntos();
     }
 
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
+    }
     private void loadSplash() {
         final Animation zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom);
         imgAyuda.startAnimation(zoomAnimation);
@@ -75,13 +96,6 @@ public class CompletaPalabraActivity extends AppCompatActivity implements View.O
         Intent irActivity= new Intent(CompletaPalabraActivity.this, SplashTodosActivity.class);
         irActivity.putExtras(b);
         startActivity(irActivity);
-    }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
     }
 
     private void loadPreference() {
@@ -104,12 +118,6 @@ public class CompletaPalabraActivity extends AppCompatActivity implements View.O
         } else if (avatarSeleccionado.equals("6")) {
             icAvatarNiveles.setBackgroundResource(R.drawable.nina_tres_n);
         }
-    }
-
-    public void irCuatro(View view) {
-        Intent irMenu = new Intent(getApplication(), Nivel24Activity.class);
-        startActivity(irMenu);
-        finish();
     }
 
     @Override
@@ -139,4 +147,15 @@ public class CompletaPalabraActivity extends AppCompatActivity implements View.O
             Toast.makeText(this, "Sigue intentando", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            //servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+
 }

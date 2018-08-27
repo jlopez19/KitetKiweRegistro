@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,9 +17,14 @@ import android.widget.Toast;
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class CompletaPalabra2Activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -26,12 +34,11 @@ public class CompletaPalabra2Activity extends AppCompatActivity implements View.
     ImageView icAvatarNiveles, img_ph, img_p, img_h, img_kx, img_th, img_ch;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_completa_palabra2);
-        db=new GestorBd(getApplication());
         img_ph=(ImageView)findViewById(R.id.img_ph);
         img_p=(ImageView)findViewById(R.id.img_p);
         img_h=(ImageView)findViewById(R.id.img_h);
@@ -53,14 +60,22 @@ public class CompletaPalabra2Activity extends AppCompatActivity implements View.
         img_ch.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
+        loadRealm();
+        loadPuntos();
     }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadPreference() {
@@ -85,11 +100,47 @@ public class CompletaPalabra2Activity extends AppCompatActivity implements View.
         }
     }
 
-    public void irCuatro(View view) {
-        Intent irMenu = new Intent(getApplication(), Nivel24Activity.class);
-        startActivity(irMenu);
-        finish();
+
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            //servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
     }
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -98,11 +149,8 @@ public class CompletaPalabra2Activity extends AppCompatActivity implements View.
             img_p.setBackgroundResource(R.drawable.k);
             img_h.setBackgroundResource(R.drawable.h);
 
-            Puntos puntos= new Puntos(id_user, 3);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
+            SumarPuntos(3);
+            puntosGanados(3);
 
             Thread timerThread = new Thread(){
                 public void run(){

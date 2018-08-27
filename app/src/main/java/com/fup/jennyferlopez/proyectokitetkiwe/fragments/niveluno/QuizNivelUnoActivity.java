@@ -34,22 +34,19 @@ public class QuizNivelUnoActivity extends AppCompatActivity implements View.OnCl
     TextView tvPreguntaUno, tvPreguntaDos, tv_puntos;
     RadioGroup rgPreUno, rgPreDos;
     RadioButton rbOralesP, rbOralesN, rbOralesN2, rbOralesN3, rbNasalesP, rbNasalesN, rbNasalesN2, rbNasalesN3;
-    GestorBd db;
     SharedPreferences preferences;
     String userName;
-    int id_user, cont_good=0, cont_fail=0, cont_intentos=0;
+    int cont_intentos=0;
     int conOB=0, conOM=0,conNB=0, conNM=0,conAB=0, conAM=0 ;
     TextView tvPreguntaTres, tvPreguntaCuatro;
     RadioGroup rgPreTres, rgPreCuatro;
     RadioButton rbAspirP, rbAspirN, rbAspirN2, rbAspirN3, rbAlargP, rbAlargN, rbAlargN2, rbAlargN3;
-    //1321
 
     ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_nivel_uno);
-        db=new GestorBd(getApplication());
 
         tv_puntos =(TextView) findViewById(R.id.tv_puntos);
         tvPreguntaUno =(TextView) findViewById(R.id.pregUnoVoc);
@@ -140,7 +137,6 @@ public class QuizNivelUnoActivity extends AppCompatActivity implements View.OnCl
     private void loadDatos() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         userName =preferences.getString(Preference.USER_NAME, "");
-        id_user =db.obtenerId(userName);
     }
 
     private void ocultarDatos() {

@@ -6,7 +6,11 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -15,20 +19,26 @@ import android.widget.Toast;
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcuatro.Nivel4Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.Nivel6Activity;
+import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveltres.Nivel3Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class QuizFinal5Activity extends AppCompatActivity implements View.OnClickListener{
-    TextView tvPreguntaUno, tvPreguntaDos;
+    TextView tvPreguntaUno, tvPreguntaDos, tv_puntos;
     RadioGroup rgPreUno, rgPreDos;
     RadioButton rbNumUnoP, rbNumUnoN, rbNumUnoN2, rbNumUnoN3, rbNumDosP, rbNumDosN, rbNumDosN2, rbNumDosN3;
     TextView tvPreguntaTres, tvPreguntaCuatro;
     RadioGroup rgPreTres, rgPreCuatro;
     RadioButton rbNumTresP, rbNumTresN, rbNumTresN2, rbNumTresN3, rbNumCuatroP, rbNumCuatroN, rbNumCuatroN2, rbNumCuatroN3;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     SharedPreferences preferences;
     String userName;
     int id_user, cont_good=0, cont_fail=0, cont_intentos=0;
@@ -38,10 +48,10 @@ public class QuizFinal5Activity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_final5);
-        db=new GestorBd(getApplication());
 
         tvPreguntaUno =(TextView)  findViewById(R.id.pregUnoNum);
         tvPreguntaDos =(TextView)  findViewById(R.id.pregDosNum);
+        tv_puntos =(TextView)  findViewById(R.id.tv_puntos);
         rgPreUno =(RadioGroup)  findViewById(R.id.rgPreguntaUno);
         rgPreDos =(RadioGroup)  findViewById(R.id.rgPreguntados);
         rbNumUnoP =(RadioButton)  findViewById(R.id.rbNumUnoP);
@@ -87,92 +97,75 @@ public class QuizFinal5Activity extends AppCompatActivity implements View.OnClic
         rbNumCuatroN. setOnClickListener(this);
         rbNumCuatroN2. setOnClickListener(this);
         rbNumCuatroN3. setOnClickListener(this);
+
         loadDatos();
+        loadRealm();
+        actualizarPuntos();
     }
+
+
     private void loadDatos() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         userName =preferences.getString(Preference.USER_NAME, "");
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
     @Override
     public void onClick(View v) {
         int id =v.getId();
         if (id== R.id.rbNumUnoP){
             conCB=1;
-            conNum=conNum+1;
             enabledNumUno();
-            puntosBuenos();
         }else if (id== R.id.rbNumUnoN || id== R.id.rbNumUnoN2 || id== R.id.rbNumUnoN3) {
             enabledNumUno();
             cont_intentos=cont_intentos+1;
             conCM=1;
-            conNum=conNum+1;
-            irPantallaErrores();
         }else if (id== R.id.rbNumDosP ){
             enabledNumDos();
             conDOB=1;
-            conNum=conNum+1;
-            puntosBuenos();
         }else if (id== R.id.rbNumDosN || id== R.id.rbNumDosN2 || id== R.id.rbNumDosN3){
             enabledNumDos();
             cont_intentos=cont_intentos+1;
             conDOM=1;
-            conNum=conNum+1;
-            irPantallaErrores();
         }if (id== R.id.rbNumTresP){
             enabledNumTres();
             conDIB=1;
-            conNum=conNum+1;
-            puntosBuenos();
         }else if (id== R.id.rbNumTresN || id== R.id.rbNumTresN2 || id== R.id.rbNumTresN3) {
             enabledNumTres();
             cont_intentos=cont_intentos+1;
             conDIM=1;
-            conNum=conNum+1;
-            irPantallaErrores();
         }else if (id== R.id.rbNumCuatroP ){
-            enabledNumCuatro();
-            conDUB=1;
-            conNum=conNum+1;
-            puntosBuenos();
+            if (conCB==1 && conDOB==1 && conDIB==1){
+                SumarPuntos(3);
+                puntosGanados(3);
+                irActivity();
+            }
         }else if (id== R.id.rbNumCuatroN || id== R.id.rbNumCuatroN2 || id== R.id.rbNumCuatroN3){
             enabledNumCuatro();
-            conDUM=1;
-            conNum=conNum+1;
-            irPantallaErrores();
-        }
-    }
-
-    private void irPantallaErrores() {
-        if (conNum==4){
-            if ((conCM==1 && conDOB==1 && conDIB==1 && conDUB==1) || (conCB==1 && conDOM==1 && conDIB==1 && conDUB==1) || (conCB==1 && conDOB==1 && conDIM==1 && conDUB==1) || (conDUM==1 &&conCB==1 && conDOB==1 && conDIB==1) ||
-                    (conCM==1 && conDOM==1 && conDIB==1 && conDUB==1) || (conCM==1 && conDOB==1 && conDIM==1 && conDUB==1) || (conCM==1 && conDOB==1 && conDIB==1 && conDUM==1)  ||
-                    (conCB==1 && conDOM==1 && conDIM==1 && conDUB==1) || (conCB==1 && conDOM==1 && conDIB==1 && conDUM==1) || (conCB==1 && conDOB==1 && conDIM==1 && conDUM==1) ||
-                    (conCM==1 && conDOM==1 && conDIM==1 && conDUB==1) ||(conCM==1 && conDOM==1 && conDIB==1 && conDUM==1) ||(conCM==1 && conDOB==1 && conDIM==1 && conDUM==1) ||(conCB==1 && conDOM==1 && conDIM==1 && conDUM==1) ||
-                    (conCM==1 && conDOM==1 && conDIM==1 && conDUM==1)) {
-                Puntos puntos= new Puntos(id_user, 2);
-                db.insertarPuntos(puntos);
-                irActivity();
-            }
-            else {
-                if (cont_intentos>=2){
-                    Toast.makeText(this, "Quiz no superado debes repetir el nivel 5", Toast.LENGTH_LONG).show();
-                    Intent irNivelDos=new Intent(this, Nivel5Activity.class);
-                    startActivity(irNivelDos);
+                if ((conCM==1 && conDOB==1 && conDIB==1) || (conCB==1 && conDOM==1 && conDIB==1) || (conCB==1 && conDOB==1 && conDIM==1)) {
+                    SumarPuntos(2);
+                    puntosGanados(2);
+                    irActivity();
                 }
-            }
-        }}
-
-    private void puntosBuenos() {
-        if (conNum==4){
-            if (conCB==1 && conDOB==1 && conDIB==1 && conDUB==1){
-                Puntos puntos= new Puntos(id_user, 3);
-                db.insertarPuntos(puntos);
-                irActivity();
-            }
+                else {
+                    if (cont_intentos>=2){
+                        Toast.makeText(this, "Quiz no superado debes repetir el nivel 3", Toast.LENGTH_LONG).show();
+                        Intent irNivelDos=new Intent(this, Nivel5Activity.class);
+                        startActivity(irNivelDos);
+                    }
+                }
         }
     }
 
@@ -211,5 +204,44 @@ public class QuizFinal5Activity extends AppCompatActivity implements View.OnClic
         rbNumCuatroN.setEnabled(false);
         rbNumCuatroN2.setEnabled(false);
         rbNumCuatroN3.setEnabled(false);
+    }
+
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void actualizarPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
     }
 }

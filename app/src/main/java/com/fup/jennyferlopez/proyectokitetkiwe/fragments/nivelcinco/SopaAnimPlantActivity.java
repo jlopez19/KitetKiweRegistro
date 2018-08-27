@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -19,9 +22,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcuatro.LaberintoAc
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveltres.ColorCorres3Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SopaAnimPlantActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,13 +39,12 @@ public class SopaAnimPlantActivity extends AppCompatActivity implements View.OnC
     ImageView icAvatarNiveles, imgAyuda, img_nx, img_kxh, img_tx, img_n, img_huevo;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sopa_anim_plant);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -58,10 +65,25 @@ public class SopaAnimPlantActivity extends AppCompatActivity implements View.OnC
         img_n.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -75,16 +97,6 @@ public class SopaAnimPlantActivity extends AppCompatActivity implements View.OnC
         Intent irActivity= new Intent(SopaAnimPlantActivity.this, SplashTodosActivity.class);
         irActivity.putExtras(b);
         startActivity(irActivity);
-    }
-
-
-
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
     }
 
     private void loadPreference() {
@@ -109,7 +121,14 @@ public class SopaAnimPlantActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
     @Override
     public void onClick(View v) {
         int id=v.getId();

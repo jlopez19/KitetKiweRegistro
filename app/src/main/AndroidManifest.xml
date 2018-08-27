@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.LogingActivity">
+        <activity android:name=".fragments.nivelsiete.Nivel7Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         <activity android:name="fragments.niveluno.Niveles13Activity" />
         <activity android:name=".activities.AvatarActivity" />
         <activity android:name=".fragments.nivelcuatro.LaberintoActivity" />
-        <activity android:name=".fragments.nivelcinco.Nivel5Activity" />
+        <activity android:name=".fragments.nivelseis.LaberintoCuerpoActivity" />
         <activity android:name=".activities.SimbolosActivity" />
         <activity android:name=".activities.RegistrarseActivity" />
         <activity android:name=".fragments.niveluno.VocalesActivity" />
@@ -51,7 +51,7 @@
         <activity android:name=".fragments.niveluno.VocalAImagenActivity" />
         <activity android:name=".fragments.niveldos.ConcenConsonanActivity" />
         <activity android:name=".fragments.niveldos.Nivel22Activity" />
-        <activity android:name=".fragments.niveltres.Nivel3Activity" />
+        <activity android:name=".activities.LogingActivity" />
         <activity android:name=".fragments.niveltres.ColoresActivity" />
         <activity android:name=".fragments.niveltres.Niveles31Activity" />
         <activity android:name=".fragments.niveluno.VocalesColiActivity" />
@@ -99,31 +99,30 @@
         <activity android:name=".fragments.nivelcinco.ImagenCorrespon2Activity" />
         <activity android:name=".fragments.nivelcinco.ImagenCorresponActivity" />
         <activity android:name=".fragments.nivelcinco.GrupoCorresponActivity" />
-        <activity android:name=".fragments.nivelcinco.GrupoCorespon2Activity" />
         <activity android:name=".fragments.niveldos.QuizFinalConsonantesActivity" />
         <activity android:name=".fragments.nivelseis.PartesCuerpoActivity" />
         <activity android:name=".fragments.nivelseis.Nivel61Activity" />
-        <activity android:name=".fragments.nivelsiete.Nivel7Activity" />
+        <activity android:name=".fragments.nivelseis.Nivel6Activity" />
         <activity android:name=".fragments.nivelseis.Nivel63Activity" />
         <activity android:name=".fragments.nivelseis.Nivel64Activity" />
         <activity android:name=".fragments.nivelcinco.QuizFinal5Activity" />
-        <activity android:name=".fragments.nivelseis.LaberintoCuerpoActivity" />
+        <activity android:name=".fragments.nivelcuatro.Nivel4Activity" />
         <activity android:name=".fragments.nivelseis.ConcentrateCuerpoActivity" />
         <activity android:name=".fragments.nivelseis.CorresCuerpoActivity" />
-        <activity android:name=".fragments.nivelseis.Nivel6Activity" />
+        <activity android:name=".fragments.nivelcinco.Nivel5Activity" />
         <activity android:name=".fragments.nivelsiete.Nivel71Activity" />
         <activity android:name=".fragments.nivelsiete.Nivel72Activity" />
         <activity android:name=".fragments.nivelsiete.Nivel73Activity" />
         <activity android:name=".fragments.nivelsiete.Nivel74Activity" />
         <activity android:name=".fragments.nivelsiete.TodosSieteActivity" />
-        <activity android:name=".fragments.nivelsiete.ColisionarCuerpoActivity" />
+        <activity android:name=".fragments.nivelsiete.ColisionarSimbolosActivity" />
         <activity android:name=".fragments.nivelsiete.ConcentrateSeresActivity" />
         <activity android:name=".activities.PantallaFinalActivity" />
         <activity android:name=".fragments.nivelsiete.UnirSaludosActivity" />
         <activity android:name=".fragments.nivelsiete.LetraFalfamiliaActivity" />
         <activity android:name=".fragments.nivelsiete.LetraFalfamilia2Activity" />
         <activity android:name=".fragments.nivelsiete.LetraFalFamilia3Activity" />
-        <activity android:name=".fragments.nivelcuatro.Nivel4Activity" />
+        <activity android:name=".fragments.niveltres.Nivel3Activity" />
         <activity android:name=".activities.GlosarioCardsActivity" />
         <activity android:name=".fragments.niveluno.QuizNivelUnoActivity" />
         <activity android:name=".fragments.nivelseis.UnirCuerpoActivity" />

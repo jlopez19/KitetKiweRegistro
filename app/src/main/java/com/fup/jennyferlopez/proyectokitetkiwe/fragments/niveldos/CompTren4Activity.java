@@ -17,9 +17,14 @@ import android.widget.Toast;
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class CompTren4Activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,12 +34,11 @@ public class CompTren4Activity extends AppCompatActivity implements View.OnClick
     ImageView icAvatarNiveles, imgToast, img_y, img_pxh, img_ch, img_th, img_huevo;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comp_tren4);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -55,19 +59,33 @@ public class CompTren4Activity extends AppCompatActivity implements View.OnClick
         img_th.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
+        loadRealm();
+        loadPuntos();
     }
 
+    private void loadRealm() {
+        Realm.init(this);
 
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
 
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            //servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");
@@ -91,6 +109,38 @@ public class CompTren4Activity extends AppCompatActivity implements View.OnClick
     }
 
 
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
+    }
+
+
 
     @Override
     public void onClick(View v) {
@@ -98,12 +148,8 @@ public class CompTren4Activity extends AppCompatActivity implements View.OnClick
         if (id==R.id.img_y2){
             img_huevo.setBackgroundResource(R.drawable.huevo_y);
 
-            Puntos puntos= new Puntos(id_user, 3);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-
+            SumarPuntos(3);
+            puntosGanados(3);
             Thread timerThread = new Thread(){
                 public void run(){
                     try{

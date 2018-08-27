@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -21,9 +24,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelsiete.Nivel72Activ
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelsiete.Nivel7Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class CorresCuerpoActivity extends AppCompatActivity implements View.OnClickListener{
     SharedPreferences preferences;
@@ -32,12 +40,11 @@ public class CorresCuerpoActivity extends AppCompatActivity implements View.OnCl
     ImageView icAvatarNiveles, imgToast, img_y, img_pxh, img_ch, img_th, img_huevo, imgAyuda;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_corres_cuerpo);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -58,11 +65,27 @@ public class CorresCuerpoActivity extends AppCompatActivity implements View.OnCl
         img_th.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
         loadSplash();
+        loadRealm();
+        loadPuntos();
     }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
+    }
+
 
     private void loadSplash() {
         final Animation zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom);
@@ -77,12 +100,42 @@ public class CorresCuerpoActivity extends AppCompatActivity implements View.OnCl
         startActivity(irActivity);
     }
 
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
     }
 
     private void loadPreference() {
@@ -116,13 +169,8 @@ public class CorresCuerpoActivity extends AppCompatActivity implements View.OnCl
             loadSplash();
         }else if (id==R.id.imgcuello){
             img_huevo.setImageResource(R.drawable.reemplazar_cuello);
-
-            Puntos puntos= new Puntos(id_user, 3);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-
+            SumarPuntos(3);
+            puntosGanados(3);
             Thread timerThread = new Thread(){
                 public void run(){
                     try{

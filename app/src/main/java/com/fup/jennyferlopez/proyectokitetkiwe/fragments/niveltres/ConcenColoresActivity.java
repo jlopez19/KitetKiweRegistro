@@ -27,10 +27,15 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.ConcenConsonan
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles14Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class ConcenColoresActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -59,14 +64,12 @@ public class ConcenColoresActivity extends AppCompatActivity implements View.OnC
     TextView tv_puntos;
     ImageView icAvatarNiveles, imgAyuda;
     TextView tv_title;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concen_colores);
-        db=new GestorBd(getApplication());
-
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
         tv_puntos = (TextView) findViewById(R.id.tv_puntos);
@@ -106,9 +109,23 @@ public class ConcenColoresActivity extends AppCompatActivity implements View.OnC
         gridView.setAdapter(adaptadorImagenes);
 
         loadPreference();
-        cargarTextV();
-        cargarTextV();
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -123,14 +140,6 @@ public class ConcenColoresActivity extends AppCompatActivity implements View.OnC
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
-    }
-
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");
@@ -212,29 +221,48 @@ public class ConcenColoresActivity extends AppCompatActivity implements View.OnC
                     startActivity(irMenu);
                     finish();
                 }if (cont_good==6 && cont_intentos ==6){
-                    Puntos puntos= new Puntos(id_user, 3);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                    SumarPuntos(3);
+                    puntosGanados(3);
                 }else if (cont_good==6 && (cont_intentos >6 || cont_intentos <9)){
-                    id_user =db.obtenerId(userName);
-                    Puntos puntos= new Puntos(id_user, 2);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                    SumarPuntos(2);
+                    puntosGanados(2);
                 }else if (cont_good==6 && (cont_intentos >=9 || cont_intentos <=12)){
-                    id_user =db.obtenerId(userName);
-                    Puntos puntos= new Puntos(id_user, 1);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                   SumarPuntos(1);
+                   puntosGanados(1);
                 }else if (cont_good<4 && cont_intentos >12){
                     toastWarning();
                 }
             }
+        }
+        private void SumarPuntos(int puntos) {
+            userName =preferences.getString(Preference.USER_NAME, "");
+            User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+            if (usuario_por_id!=null) {
+
+                int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+                servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+                int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+                tv_puntos.setText(""+ p1);
+            }
+        }
+        private void puntosGanados(int puntos) {
+            Toast toasta = new Toast(getApplicationContext());
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_personalizado,
+                    (ViewGroup) findViewById(R.id.lytLayout));
+
+            TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+            ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+            imgToast.setBackgroundResource(R.drawable.ic_oros);
+            txtMsg.setText("Ganaste "+ puntos +" semillas");
+            String font_url ="font/dklemonyellowsun.otf";
+            Typeface font = Typeface.createFromAsset(getApplicationContext().getResources().getAssets(), font_url);
+            txtMsg.setTypeface(font);
+            toasta.setDuration(Toast.LENGTH_SHORT);
+            toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+            toasta.setView(layout);
+            toasta.show();
         }
 
         private void toastWarning() {
@@ -310,6 +338,15 @@ public class ConcenColoresActivity extends AppCompatActivity implements View.OnC
         }
     }
 
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
     // se colocan las imagenes de fondo
     private void getImagenesFondo() {
         imagenesFondo=new int[cantidadParejas*2];

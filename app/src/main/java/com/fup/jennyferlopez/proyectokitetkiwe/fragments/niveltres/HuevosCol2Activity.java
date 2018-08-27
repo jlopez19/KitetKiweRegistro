@@ -15,9 +15,14 @@ import android.widget.Toast;
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class HuevosCol2Activity extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,15 +33,12 @@ public class HuevosCol2Activity extends AppCompatActivity implements View.OnClic
     ImageView icAvatarNiveles;
     TextView tv_title;
     int id_user;
-    GestorBd db;
-    GridView sopaLetras;
+    ServicioUsuario servicioUsuario;
     ImageView imgToast, img_t, img_h, img_tx, img_c, img_huevo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_huevos_col2);
-
-        db=new GestorBd(getApplication());
 
         img_t = (ImageView) findViewById(R.id.img_t2);
         img_h = (ImageView) findViewById(R.id.img_h2);
@@ -60,16 +62,33 @@ public class HuevosCol2Activity extends AppCompatActivity implements View.OnClic
         img_tx.setOnClickListener(this);
         img_c.setOnClickListener(this);
         loadPreference();
-        cargarTextV();
-    }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+        loadRealm();
+        loadPuntos();
     }
 
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
+    }
+
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");

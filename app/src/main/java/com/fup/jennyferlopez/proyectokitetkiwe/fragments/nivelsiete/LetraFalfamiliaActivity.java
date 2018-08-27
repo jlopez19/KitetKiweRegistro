@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -19,9 +22,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcinco.LetraFaltant
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcuatro.LaberintoActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class LetraFalfamiliaActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -31,14 +39,13 @@ public class LetraFalfamiliaActivity extends AppCompatActivity implements View.O
     ImageView icAvatarNiveles, imgAyuda, img_nx, img_kxh, img_tx, img_n, img_huevo;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     TextView tv_reemplazar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_letra_falfamilia);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -61,10 +68,25 @@ public class LetraFalfamiliaActivity extends AppCompatActivity implements View.O
         img_n.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -79,15 +101,14 @@ public class LetraFalfamiliaActivity extends AppCompatActivity implements View.O
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
     }
-
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");

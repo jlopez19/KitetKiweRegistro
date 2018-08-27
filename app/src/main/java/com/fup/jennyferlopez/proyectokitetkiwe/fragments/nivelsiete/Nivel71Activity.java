@@ -10,18 +10,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.activities.MenuActivity;
-import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.CorresCuerpoActivity;
-import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
-import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
-
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -100,7 +94,7 @@ public class Nivel71Activity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getId()== R.id.correAvatar){
-             Intent irNumeros= new Intent(getApplication(), ColisionarCuerpoActivity.class);
+             Intent irNumeros= new Intent(getApplication(), ColisionarSimbolosActivity.class);
             startActivity(irNumeros);
         }
     }

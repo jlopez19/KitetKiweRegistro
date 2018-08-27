@@ -51,7 +51,6 @@
             android:layout_height="90dp"
             android:background="@drawable/img_letra_falt"
             android:id="@+id/imageView8"
-            android:onClick="irDos"
             android:layout_below="@+id/ic_avatarNiveles"
             android:layout_toLeftOf="@+id/ic_avatarNiveles"
             android:layout_toStartOf="@+id/ic_avatarNiveles" />

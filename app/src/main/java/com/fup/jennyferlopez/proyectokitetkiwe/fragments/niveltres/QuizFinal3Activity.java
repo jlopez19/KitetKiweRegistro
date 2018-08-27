@@ -6,8 +6,12 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -19,9 +23,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcuatro.Nivel4Activ
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.Nivel2Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class QuizFinal3Activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,11 +39,11 @@ public class QuizFinal3Activity extends AppCompatActivity implements View.OnClic
     RadioGroup rgPreUno, rgPreDos;
     RadioButton rbColorUnoP, rbColorUnoN, rbColorUnoN2, rbColorUnoN3, rbColorDosP, rbColorDosN, rbColorDosN2, rbColorDosN3;
 
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     SharedPreferences preferences;
     String userName;
     int id_user, cont_good=0, cont_fail=0, cont_intentos=0;
-    TextView tvPreguntaTres, tvPreguntaCuatro;
+    TextView tvPreguntaTres, tvPreguntaCuatro, tv_puntos;
     RadioGroup rgPreTres, rgPreCuatro;
     RadioButton rbColorTresP, rbColorTresN, rbColorTresN2, rbColorTresN3, rbColorCuatroP, rbColorCuatroN, rbColorCuatroN2, rbColorCuatroN3;
 
@@ -43,10 +52,10 @@ public class QuizFinal3Activity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_final3);
-        db=new GestorBd(getApplicationContext());
 
         tvPreguntaUno =(TextView)  findViewById(R.id.pregUnoCol);
         tvPreguntaDos =(TextView)  findViewById(R.id.pregDosCol);
+        tv_puntos =(TextView)  findViewById(R.id.tv_puntos);
         rgPreUno =(RadioGroup)  findViewById(R.id.rgPreguntaUno);
         rgPreDos =(RadioGroup)  findViewById(R.id.rgPreguntados);
         rbColorUnoP =(RadioButton)  findViewById(R.id.rbColorUnoP);
@@ -93,16 +102,33 @@ public class QuizFinal3Activity extends AppCompatActivity implements View.OnClic
         rbColorCuatroN.setOnClickListener(this);
         rbColorCuatroN2.setOnClickListener(this);
         rbColorCuatroN3.setOnClickListener(this);
+
         loadDatos();
+        loadRealm();
+        actualizarPuntos();
     }
+
+
     private void loadDatos() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         userName =preferences.getString(Preference.USER_NAME, "");
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
     }
+
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
+    }
+
     @Override
     public void onClick(View v) {
         int id =v.getId();
@@ -129,15 +155,15 @@ public class QuizFinal3Activity extends AppCompatActivity implements View.OnClic
             conAM=1;
         }else if (id== R.id.rbColorCuatroP ){
             if (conVB==1 && conRB==1 && conAB==1){
-                Puntos puntos= new Puntos(id_user, 3);
-                db.insertarPuntos(puntos);
+                SumarPuntos(3);
+                puntosGanados(3);
                 irActivity();
             }
         }else if (id== R.id.rbColorCuatroN || id== R.id.rbColorCuatroN2 || id== R.id.rbColorCuatroN3){
             enabledColorCuatro();
             if ((conVM==1 && conRB==1 && conAB==1) || (conVB==1 && conRM==1 && conAB==1) || (conVB==1 && conRB==1 && conAM==1)) {
-                Puntos puntos= new Puntos(id_user, 2);
-                db.insertarPuntos(puntos);
+                SumarPuntos(2);
+                puntosGanados(2);
                 irActivity();
             }
             else {
@@ -182,5 +208,44 @@ public class QuizFinal3Activity extends AppCompatActivity implements View.OnClic
         rbColorCuatroN.setEnabled(false);
         rbColorCuatroN2.setEnabled(false);
         rbColorCuatroN3.setEnabled(false);
+    }
+
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void actualizarPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
     }
 }

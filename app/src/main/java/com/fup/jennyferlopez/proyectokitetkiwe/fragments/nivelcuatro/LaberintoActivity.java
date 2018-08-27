@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -21,9 +24,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveltres.ColorCorresAc
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles12Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class LaberintoActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -32,14 +40,12 @@ public class LaberintoActivity extends AppCompatActivity implements View.OnClick
     TextView tv_puntos;
     ImageView icAvatarNiveles, img_e_r, img_cambiar_letras, img_uno, img_tres, img_seis,imgAyuda;
     TextView tv_title;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     int cont_intentos=0, cont_good=0, id_user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laberinto);
-        db=new GestorBd(getApplication());
-
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
         img_e_r = (ImageView) findViewById(R.id.e_r);
@@ -58,11 +64,26 @@ public class LaberintoActivity extends AppCompatActivity implements View.OnClick
         img_seis.setOnClickListener(this);
 
         loadPreference();
-        cargarTextV();
 
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -77,14 +98,6 @@ public class LaberintoActivity extends AppCompatActivity implements View.OnClick
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
-    }
-
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");
@@ -107,36 +120,15 @@ public class LaberintoActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-
-    private void cargarPuntos() {
-        if (cont_good ==4) {
-            Intent irMenu = new Intent(getApplication(), QuizFinal4Activity.class);
-            startActivity(irMenu);
-            finish();
-        }if (cont_good==4 && cont_intentos ==4){
-            Puntos puntos= new Puntos(id_user, 3);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
             tv_puntos.setText(""+ p);
-        }else if (cont_good==4 && (cont_intentos >4 || cont_intentos <7)){
-            id_user =db.obtenerId(userName);
-            Puntos puntos= new Puntos(id_user, 2);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-        }else if (cont_good==4 && (cont_intentos >=7 || cont_intentos <=10)){
-            id_user =db.obtenerId(userName);
-            Puntos puntos= new Puntos(id_user, 1);
-            db.insertarPuntos(puntos);
-            List<Puntos> pts=db.sumaPuntos(id_user);
-            int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-            tv_puntos.setText(""+ p);
-        }else if (cont_good<4 && cont_intentos >10){
-            // toastWarning();
         }
     }
+
 
 
     @Override

@@ -7,8 +7,12 @@ import android.graphics.Typeface;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -36,7 +40,7 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
     TextView tvPreguntaTres, tvPreguntaCuatro, tv_puntos;
     RadioGroup rgPreTres, rgPreCuatro;
     RadioButton rbAspCP, rbAspCN, rbAspCN2, rbAspCN3, rbPalCP, rbPalCN, rbPalCN2, rbPalCN3;
-    GestorBd db;
+
     SharedPreferences preferences;
     String userName;
     int id_user, cont_good=0, cont_fail=0, cont_intentos=0;
@@ -49,7 +53,6 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_final_consonantes);
-        db=new GestorBd(this);
 
         tv_puntos =(TextView) findViewById(R.id.tv_puntos);
         tvPreguntaUno =(TextView) findViewById(R.id.pregUnoCon);
@@ -118,9 +121,16 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
         rbPalCN.setOnClickListener(this);
         rbPalCN2.setOnClickListener(this);
         rbPalCN3.setOnClickListener(this);
+
         loadDatos();
         loadRealm();
         actualizarPuntos();
+    }
+
+
+    private void loadDatos() {
+        preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
+        userName =preferences.getString(Preference.USER_NAME, "");
     }
 
     private void loadRealm() {
@@ -137,15 +147,6 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
 
     }
 
-    private void loadDatos() {
-        preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
-        userName =preferences.getString(Preference.USER_NAME, "");
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-
-    }
 
     private void irActivity() {
         Intent irNivelDos=new Intent(this, Nivel3Activity.class);
@@ -178,15 +179,15 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
             conAM=1;
         }else if (id== R.id.rbPalCP ){
             if (conBB==1 && conPB==1 && conAB==1){
-                Puntos puntos= new Puntos(id_user, 3);
-                db.insertarPuntos(puntos);
+                SumarPuntos(3);
+                puntosGanados(3);
                 irActivity();
             }
         }else if (id== R.id.rbPalCN || id== R.id.rbPalCN2 || id== R.id.rbPalCN3){
             enabledAlargadasC();
             if ((conBM==1 && conPB==1 && conAB==1) || (conBB==1 && conPM==1 && conAB==1) || (conBB==1 && conPB==1 && conAM==1)) {
-                Puntos puntos= new Puntos(id_user, 2);
-                db.insertarPuntos(puntos);
+                SumarPuntos(2);
+                puntosGanados(2);
                 irActivity();
             }
             else {
@@ -230,6 +231,18 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
         rbPalCN2.setEnabled(false);
         rbPalCN3.setEnabled(false);
     }
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
     private void actualizarPuntos() {
         userName =preferences.getString(Preference.USER_NAME, "");
         User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
@@ -238,5 +251,22 @@ public class QuizFinalConsonantesActivity extends AppCompatActivity implements V
             tv_puntos.setText(""+ p);
         }
     }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
 
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
+    }
 }

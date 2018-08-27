@@ -25,9 +25,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.CompTrenActivi
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.Niveles12Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class ColiColoresActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -43,8 +48,7 @@ public class ColiColoresActivity extends AppCompatActivity implements View.OnCli
     float xi, xi1, yi, yi1, hi,hi1, li, li1;
     float xm, xm1, ym, ym1, hm,hm1, lm, lm1;
     float xg, xg1, yg, yg1, hg,hg1, lg, lg1;
-
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
 
     ImageView img_a, img_e, img_i, img_u, snd_a, snd_e, snd_i, snd_u;
     int cont_intentos=0, cont_good=0, cont_fail=0, id_user;
@@ -54,8 +58,6 @@ public class ColiColoresActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coli_colores);
-
-        db=new GestorBd(getApplication());
 
         img_a= (ImageView) findViewById(R.id.nv_col_a);
         img_e= (ImageView) findViewById(R.id.nv_col_e);
@@ -93,8 +95,23 @@ public class ColiColoresActivity extends AppCompatActivity implements View.OnCli
         tv_puntos.setTypeface(font);
         tv_title.setTypeface(font);
         loadPreference();
-        cargarTextV();
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -312,44 +329,66 @@ public class ColiColoresActivity extends AppCompatActivity implements View.OnCli
             return false;
         }
 
+        private void SumarPuntos(int puntos) {
+            userName =preferences.getString(Preference.USER_NAME, "");
+            User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+            if (usuario_por_id!=null) {
+
+                int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+
+                servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+                int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+                tv_puntos.setText(""+ p1);
+            }
+        }
+        private void puntosGanados(int puntos) {
+            Toast toasta = new Toast(getApplicationContext());
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_personalizado,
+                    (ViewGroup) findViewById(R.id.lytLayout));
+
+            TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+            ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+            imgToast.setBackgroundResource(R.drawable.ic_oros);
+            txtMsg.setText("Ganaste "+ puntos +" semillas");
+            String font_url ="font/dklemonyellowsun.otf";
+            Typeface font = Typeface.createFromAsset(getApplicationContext().getResources().getAssets(), font_url);
+            txtMsg.setTypeface(font);
+            toasta.setDuration(Toast.LENGTH_SHORT);
+            toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+            toasta.setView(layout);
+            toasta.show();
+        }
+
         private void cargarPuntos() {
             if (cont_good ==4) {
                 Intent irMenu = new Intent(getApplication(), Niveles33Activity.class);
                 startActivity(irMenu);
                 finish();
             }if (cont_good==4 && cont_intentos ==4){
-                Puntos puntos= new Puntos(id_user, 3);
-                db.insertarPuntos(puntos);
-                List<Puntos> pts=db.sumaPuntos(id_user);
-                int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                tv_puntos.setText(""+ p);
+               SumarPuntos(3);
+               puntosGanados(3);
             }else if (cont_good==4 && (cont_intentos >4 || cont_intentos <7)){
-                id_user =db.obtenerId(userName);
-                Puntos puntos= new Puntos(id_user, 2);
-                db.insertarPuntos(puntos);
-                List<Puntos> pts=db.sumaPuntos(id_user);
-                int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                tv_puntos.setText(""+ p);
+                SumarPuntos(2);
+                puntosGanados(2);
             }else if (cont_good==4 && (cont_intentos >=7 || cont_intentos <=10)){
-                id_user =db.obtenerId(userName);
-                Puntos puntos= new Puntos(id_user, 1);
-                db.insertarPuntos(puntos);
-                List<Puntos> pts=db.sumaPuntos(id_user);
-                int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                tv_puntos.setText(""+ p);
+               SumarPuntos(1);
+               puntosGanados(1);
             }else if (cont_good<4 && cont_intentos >10){
                 toastWarning();
             }
         }
     };
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
-    }
 
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
     private void toastWarning() {
         Toast toasta = new Toast(getApplicationContext());
         LayoutInflater inflater = getLayoutInflater();

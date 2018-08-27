@@ -7,9 +7,14 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,52 +24,48 @@ import android.widget.Toast;
 import com.fup.jennyferlopez.proyectokitetkiwe.R;
 import com.fup.jennyferlopez.proyectokitetkiwe.activities.SplashTodosActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelcuatro.LaberintoActivity;
+import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.LaberintoCuerpoActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.Nivel63Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.DrawingView;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class UnirSaludosActivity extends AppCompatActivity implements View.OnClickListener{
-    private DrawingView drawView;
-    private ImageView currPaint, drawBtn, eraseBtn, siguiente;
     SharedPreferences preferences;
     String avatarSeleccionado, userName;
     TextView tv_puntos;
-    ImageView icAvatarNiveles;
+    ImageView icAvatarNiveles, imgAyuda;
     TextView tv_title;
-    int id_user;
-    GestorBd db;
-    ImageView img_ocho, imgAyuda;
-
-    private float smallBrush, mediumBrush, largeBrush;
+    int id_user, cont=0;
+    ServicioUsuario servicioUsuario;
+    EditText tv_comoestas, tv_adios, tv_hastaluego, tv_quehacen;
+    Button btn_comoestas, btn_adios, btn_hastaluego, btn_quehacen;
+    String comoestas, adios, hastaluego, quehacen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unir_saludos);
-        db=new GestorBd(getApplication());
-        drawView = (DrawingView)findViewById(R.id.drawing);
-        LinearLayout paintLayout = (LinearLayout)findViewById(R.id.paint_colors);
-        currPaint = (ImageButton)paintLayout.getChildAt(0);
-        currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-        smallBrush = getResources().getInteger(R.integer.small_size);
-        mediumBrush = getResources().getInteger(R.integer.medium_size);
-        largeBrush = getResources().getInteger(R.integer.large_size);
-        drawBtn = (ImageView) findViewById(R.id.draw_btn);
-        drawBtn.setOnClickListener(this);
-        drawView.setBrushSize(mediumBrush);
-        eraseBtn = (ImageView) findViewById(R.id.erase_btn);
-        eraseBtn.setOnClickListener(this);
 
         tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_comoestas = (EditText) findViewById(R.id.tv_comoestas);
+        tv_adios = (EditText) findViewById(R.id.tv_adios);
+        tv_hastaluego = (EditText) findViewById(R.id.tv_hastaluego);
+        tv_quehacen = (EditText) findViewById(R.id.tv_quehacen);
+        btn_comoestas = (Button) findViewById(R.id.btn_comoestas);
+        btn_adios = (Button) findViewById(R.id.btn_adios);
+        btn_hastaluego = (Button) findViewById(R.id.btn_hastaluego);
+        btn_quehacen = (Button) findViewById(R.id.btn_quehacen);
+
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
-        img_ocho = (ImageView) findViewById(R.id.imageView8);
-
-
-        img_ocho.setOnClickListener(this);
 
         tv_puntos = (TextView) findViewById(R.id.tv_puntos);
         String font_url ="font/dklemonyellowsun.otf";
@@ -72,47 +73,44 @@ public class UnirSaludosActivity extends AppCompatActivity implements View.OnCli
         tv_puntos.setTypeface(font);
         tv_title.setTypeface(font);
 
-        loadPreference();
-        cargarTextV();
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
+        btn_comoestas.setOnClickListener(this);
+        btn_hastaluego.setOnClickListener(this);
+        btn_adios.setOnClickListener(this);
+        btn_quehacen.setOnClickListener(this);
+        loadPreference();
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
         final Animation zoomAnimation = AnimationUtils.loadAnimation(this, R.anim.zoom);
         imgAyuda.startAnimation(zoomAnimation);
         Bundle b= new Bundle();
-        b.putString("text_uno", "Llena la sopa de letras");
-        b.putString("text_dos", "con las palabras que se muestran abajo");
-        b.putInt("img_uno", R.drawable.img_sopa);
-        b.putInt("img_dos", R.drawable.img_letras_sopa);
+        b.putString("text_uno", "Escribe en la caja de texto en nasa ");
+        b.putString("text_dos", "la parter del cuerpo correspondiente despues presiona la impagen para validar");
+        b.putInt("img_uno", 0);
+        b.putInt("img_dos", R.drawable.toast_good);
         Intent irActivity= new Intent(UnirSaludosActivity.this, SplashTodosActivity.class);
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-    public void paintClicked(View view){
-        //use chosen color
-        drawView.setErase(false);
-        drawView.setBrushSize(drawView.getLastBrushSize());
-        if(view!=currPaint){
-//update color
-            ImageButton imgView = (ImageButton)view;
-            String color = view.getTag().toString();
-            drawView.setColor(color);
-            imgView.setImageDrawable(getResources().getDrawable(R.drawable.paint_pressed));
-            currPaint.setImageDrawable(getResources().getDrawable(R.drawable.paint));
-            currPaint=(ImageButton)view;
-        }
-    }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
-    }
-
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
         avatarSeleccionado = preferences.getString(Preference.AVATAR_SEECCIONADO, "");
@@ -134,89 +132,105 @@ public class UnirSaludosActivity extends AppCompatActivity implements View.OnCli
             icAvatarNiveles.setBackgroundResource(R.drawable.nina_tres_n);
         }
     }
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.img_ayuda) {
-        loadSplash();
-        }else if(view.getId()==R.id.draw_btn){
-            //draw button clickedfinal
-            final Dialog brushDialog = new Dialog(this);
-            brushDialog.setTitle("Tamaño lapiz");
-            brushDialog.setContentView(R.layout.pencil_chooser);
-            ImageView smallBtn = (ImageView) brushDialog.findViewById(R.id.small_brush);
-            smallBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(smallBrush);
-                    drawView.setLastBrushSize(smallBrush);
-                    brushDialog.dismiss();
-                    drawView.setErase(false);
+        int id = view.getId();
+        if (id == R.id.img_ayuda) {
+            loadSplash();
+        } else if (id == R.id.btn_comoestas) {
+            comoestas=tv_comoestas.getText().toString().trim();
+            if (comoestas.isEmpty()){
+                tv_comoestas.setError("Escriba como estas en nasa");
+            }else{
+                if (comoestas.equals("mau u'pga")){
+                    Toast.makeText(this, "Muy bien", Toast.LENGTH_SHORT).show();
+                    tv_comoestas.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
+                }else if (!comoestas.equals("mau u'pga")){
+                    Toast.makeText(this, "Mal escrita", Toast.LENGTH_SHORT).show();
+                    tv_comoestas.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
                 }
-            });
-            ImageView mediumBtn = (ImageView) brushDialog.findViewById(R.id.medium_brush);
-            mediumBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(mediumBrush);
-                    drawView.setLastBrushSize(mediumBrush);
-                    brushDialog.dismiss();
-                    drawView.setErase(false);
+            }
+        } else if (id == R.id.btn_adios) {
+            adios=tv_adios.getText().toString().trim();
+            if (adios.isEmpty()){
+                tv_adios.setError("Escriba adios en nasa");
+            }else {
+                cont=cont+1;
+                if (adios.equals("ne'uth")){
+                    Toast.makeText(this, "Muy bien", Toast.LENGTH_SHORT).show();
+                    tv_adios.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
+                }else if (!adios.equals("ne'uth")){
+                    Toast.makeText(this, "Mal escrita", Toast.LENGTH_SHORT).show();
+                    tv_adios.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
                 }
-            });
-
-            ImageView largeBtn = (ImageView) brushDialog.findViewById(R.id.large_brush);
-            largeBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setBrushSize(largeBrush);
-                    drawView.setLastBrushSize(largeBrush);
-                    brushDialog.dismiss();
-                    drawView.setErase(false);
+            }
+        } else if (id == R.id.btn_hastaluego) {
+            hastaluego=tv_hastaluego.getText().toString().trim();
+            if (hastaluego.isEmpty()){
+                tv_hastaluego.setError("Escriba hastaluego en nasa");
+            }else {
+                cont=cont+1;
+                if (hastaluego.equals("putx uyudkhw")){
+                    Toast.makeText(this, "Muy bien", Toast.LENGTH_SHORT).show();
+                    tv_hastaluego.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
+                }else if (!hastaluego.equals("putx uyudkhw")){
+                    Toast.makeText(this, "Mal escrita", Toast.LENGTH_SHORT).show();
+                    tv_hastaluego.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
                 }
-            });
-            brushDialog.show();
-        }else if(view.getId()==R.id.erase_btn){
-            //switch to erase - choose size
-            final Dialog brushDialog = new Dialog(this);
-            brushDialog.setTitle("Tamaño borrador:");
-            brushDialog.setContentView(R.layout.brush_chooser);
-            ImageView smallBtn = (ImageView) brushDialog.findViewById(R.id.small_brush);
-            smallBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(smallBrush);
-                    brushDialog.dismiss();
+            }
+        } else if (id == R.id.btn_quehacen) {
+            quehacen=tv_quehacen.getText().toString().trim();
+            if (quehacen.isEmpty()){
+                tv_quehacen.setError("Escriba que hacen en nasa");
+            }else {
+                cont=cont+1;
+                if (quehacen.equals("kih kweyu'")){
+                    Toast.makeText(this, "Muy bien", Toast.LENGTH_SHORT).show();
+                    tv_quehacen.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
+                }else if (!quehacen.equals("kih kweyu'")){
+                    Toast.makeText(this, "Mal escrita", Toast.LENGTH_SHORT).show();
+                    tv_quehacen.setEnabled(false);
+                    if (cont==3){
+                        irActivity();
+                    }
                 }
-            });
-            ImageView mediumBtn = (ImageView) brushDialog.findViewById(R.id.medium_brush);
-            mediumBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(mediumBrush);
-                    brushDialog.dismiss();
-                }
-            });
-            ImageView largeBtn = (ImageView) brushDialog.findViewById(R.id.large_brush);
-            largeBtn.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    drawView.setErase(true);
-                    drawView.setBrushSize(largeBrush);
-                    brushDialog.dismiss();
-                }
-            });
-            brushDialog.show();
+            }
         }
-        if (view.getId() == R.id.imageView8) {
-            Intent ir=new Intent(getApplicationContext(), Nivel73Activity.class);
-            startActivity(ir);
-            finish();
-        }else {
-            Toast.makeText(this, "intentalo de nuevo", Toast.LENGTH_SHORT).show();
-        }
 
+    }
+
+    private void irActivity() {
+        Intent irNumeros= new Intent(getApplication(), Nivel73Activity.class);
+        startActivity(irNumeros);
     }
 }

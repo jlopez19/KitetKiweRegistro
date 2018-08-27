@@ -353,7 +353,6 @@ public class VocalesColiActivity extends AppCompatActivity implements View.OnCli
         userName =preferences.getString(Preference.USER_NAME, "");
         User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
         if (usuario_por_id!=null) {
-            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
             int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
             tv_puntos.setText(""+ p);
         }
@@ -364,7 +363,6 @@ public class VocalesColiActivity extends AppCompatActivity implements View.OnCli
         if (usuario_por_id!=null) {
 
             int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
-
             servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
             int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
             tv_puntos.setText(""+ p1);

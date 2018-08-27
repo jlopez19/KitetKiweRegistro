@@ -163,7 +163,7 @@
                         android:layout_width="@dimen/w_color"
                         android:layout_height="@dimen/numeros"
                         android:layout_marginRight="40dp"
-                        android:background="@drawable/img_sabila"
+                        android:background="@drawable/img_sab"
                         android:id="@+id/n_nueve"/>
 
                     <TextView

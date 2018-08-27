@@ -7,7 +7,10 @@ import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -21,9 +24,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.Nivel23Activit
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveluno.VocalesColiActivity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class ColorCorresActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -33,13 +41,12 @@ public class ColorCorresActivity extends AppCompatActivity implements View.OnCli
     ImageView icAvatarNiveles,imgAyuda;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     ImageView img_negro, img_blanco, img_amarillo, img_azul, img_rojo, img_verde, img_rosado, img_gris, img_morado, img_naranja, paint_naranja;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_corres);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -76,8 +83,23 @@ public class ColorCorresActivity extends AppCompatActivity implements View.OnCli
         tv_title.setTypeface(font);
 
         loadPreference();
-        cargarTextV();
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -92,13 +114,7 @@ public class ColorCorresActivity extends AppCompatActivity implements View.OnCli
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
-    }
+
 
     private void loadPreference() {
         preferences = getSharedPreferences(Preference.PREFERENCE_NAME, Activity.MODE_PRIVATE);
@@ -146,4 +162,14 @@ public class ColorCorresActivity extends AppCompatActivity implements View.OnCli
             Toast.makeText(this, "intentalo de nuevo", Toast.LENGTH_SHORT).show();
         }
     }
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+
 }

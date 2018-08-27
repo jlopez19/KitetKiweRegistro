@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -22,9 +25,14 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.CompTren2Activ
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.niveldos.Nivel23Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SopaColoresActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -35,14 +43,13 @@ public class SopaColoresActivity extends AppCompatActivity implements View.OnCli
     ImageView icAvatarNiveles;
     TextView tv_title;
     int id_user;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     ImageView  img_t, img_th, img_tx, img_c, img_huevo, imgAyuda;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sopa_colores);
-        db=new GestorBd(getApplication());
 
         img_t = (ImageView) findViewById(R.id.img_t2);
         img_th = (ImageView) findViewById(R.id.img_th2);
@@ -68,9 +75,23 @@ public class SopaColoresActivity extends AppCompatActivity implements View.OnCli
         img_tx.setOnClickListener(this);
         img_c.setOnClickListener(this);
         loadPreference();
-        cargarTextV();
-
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -84,13 +105,6 @@ public class SopaColoresActivity extends AppCompatActivity implements View.OnCli
         Intent irActivity= new Intent(SopaColoresActivity.this, SplashTodosActivity.class);
         irActivity.putExtras(b);
         startActivity(irActivity);
-    }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
     }
 
     private void loadPreference() {
@@ -114,11 +128,14 @@ public class SopaColoresActivity extends AppCompatActivity implements View.OnCli
             icAvatarNiveles.setBackgroundResource(R.drawable.nina_tres_n);
         }
     }
-
-    public void ircuatro(View view) {
-        Intent irMenu = new Intent(getApplication(), QuizFinal3Activity.class);
-        startActivity(irMenu);
-        finish();
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            servicioUsuario.actualizaractivity(usuario_por_id,"VocalesColiActivity");
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
     }
 
     @Override

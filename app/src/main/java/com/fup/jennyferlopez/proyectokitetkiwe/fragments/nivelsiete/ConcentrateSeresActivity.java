@@ -28,10 +28,15 @@ import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.ConcentrateCu
 import com.fup.jennyferlopez.proyectokitetkiwe.fragments.nivelseis.Nivel64Activity;
 import com.fup.jennyferlopez.proyectokitetkiwe.gestorbd.GestorBd;
 import com.fup.jennyferlopez.proyectokitetkiwe.models.Puntos;
+import com.fup.jennyferlopez.proyectokitetkiwe.models.User;
 import com.fup.jennyferlopez.proyectokitetkiwe.utils.Preference;
+import com.fup.jennyferlopez.proyectokitetkiwe.utils.ServicioUsuario;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class ConcentrateSeresActivity extends AppCompatActivity implements View.OnClickListener {
     int fondo = R.drawable.img_concentrate;
@@ -59,12 +64,11 @@ public class ConcentrateSeresActivity extends AppCompatActivity implements View.
     TextView tv_puntos;
     ImageView icAvatarNiveles, imgAyuda;
     TextView tv_title;
-    GestorBd db;
+    ServicioUsuario servicioUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_concentrate_seres);
-        db=new GestorBd(getApplication());
 
         tv_title = (TextView) findViewById(R.id.tv_title);
         icAvatarNiveles = (ImageView) findViewById(R.id.ic_avatarNiveles);
@@ -103,10 +107,25 @@ public class ConcentrateSeresActivity extends AppCompatActivity implements View.
         gridView.setAdapter(adaptadorImagenes);
 
         loadPreference();
-        cargarTextV();
         imgAyuda = (ImageView) findViewById(R.id.img_ayuda);
         imgAyuda.setOnClickListener(this);
         loadSplash();
+        loadRealm();
+        loadPuntos();
+    }
+
+    private void loadRealm() {
+        Realm.init(this);
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name("Test1")
+                .schemaVersion(1)
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        servicioUsuario = new ServicioUsuario(Realm.getDefaultInstance());
+
     }
 
     private void loadSplash() {
@@ -121,12 +140,42 @@ public class ConcentrateSeresActivity extends AppCompatActivity implements View.
         irActivity.putExtras(b);
         startActivity(irActivity);
     }
-    private void cargarTextV() {
-        id_user =db.obtenerId(userName);
-        List<Puntos> pts=db.sumaPuntos(id_user);
-        pts=db.sumaPuntos(id_user);
-        int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-        tv_puntos.setText(""+ p);
+    private void loadPuntos() {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p);
+        }
+    }
+    private void SumarPuntos(int puntos) {
+        userName =preferences.getString(Preference.USER_NAME, "");
+        User usuario_por_id = servicioUsuario.obtenerUsuarioPorId(userName);
+        if (usuario_por_id!=null) {
+
+            int p=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            servicioUsuario.actualizarPuntos(usuario_por_id,puntos+p);
+            int p1=Integer.parseInt(String.valueOf(usuario_por_id.getPuntos()));
+            tv_puntos.setText(""+ p1);
+        }
+    }
+    private void puntosGanados(int puntos) {
+        Toast toasta = new Toast(getApplicationContext());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_personalizado,
+                (ViewGroup) findViewById(R.id.lytLayout));
+
+        TextView txtMsg = (TextView)layout.findViewById(R.id.tvMsjToast);
+        ImageView imgToast =(ImageView) layout.findViewById(R.id.imgToast);
+        imgToast.setBackgroundResource(R.drawable.ic_oros);
+        txtMsg.setText("Ganaste "+ puntos +" semillas");
+        String font_url ="font/dklemonyellowsun.otf";
+        Typeface font = Typeface.createFromAsset(this.getResources().getAssets(), font_url);
+        txtMsg.setTypeface(font);
+        toasta.setDuration(Toast.LENGTH_SHORT);
+        toasta.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL, 0,0);
+        toasta.setView(layout);
+        toasta.show();
     }
 
     private void loadPreference() {
@@ -211,25 +260,14 @@ public class ConcentrateSeresActivity extends AppCompatActivity implements View.
                     startActivity(irMenu);
                     finish();
                 }if (cont_good==6 && cont_intentos ==6){
-                    Puntos puntos= new Puntos(id_user, 3);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                    SumarPuntos(3);
+                    puntosGanados(3);
                 }else if (cont_good==6 && (cont_intentos >6 || cont_intentos <9)){
-                    id_user =db.obtenerId(userName);
-                    Puntos puntos= new Puntos(id_user, 2);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                    SumarPuntos(2);
+                    puntosGanados(2);
                 }else if (cont_good==6 && (cont_intentos >=9 || cont_intentos <=12)){
-                    id_user =db.obtenerId(userName);
-                    Puntos puntos= new Puntos(id_user, 1);
-                    db.insertarPuntos(puntos);
-                    List<Puntos> pts=db.sumaPuntos(id_user);
-                    int p=Integer.parseInt(String.valueOf(pts.get(0).getPuntos()));
-                    tv_puntos.setText(""+ p);
+                    SumarPuntos(1);
+                    puntosGanados(1);
                 }else if (cont_good<4 && cont_intentos >12){
                     toastWarning();
                 }
